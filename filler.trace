@@ -1,5 +1,6 @@
-seed = 4317
-X: error on input
-resources/players/grati.filler won
+seed = 3437
+X: timedout
+./fblom.filler: Segfault at 0
+./fblom.filler won
 Score:
-1AGAINST1
+0AGAINST0

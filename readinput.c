@@ -12,29 +12,18 @@
 
 #include "filler.h"
 
-static void			find_first_coor(t_info *coor, char *map, char player)
+
+/*
+** get_player determines the player according to the what's
+** written on the stdout
+*/
+
+char		get_player(char *buf)
 {
-	int		i;
-
-	i = 0;
-	ft_putnbr_fd(3, 1);
-	ft_putchar_fd(' ', 1);
-	ft_putnbr_fd(3, 1);
-	ft_putchar_fd('\n', 1);
-	return ;
-	while (map[i] != '\0')
-	{
-		if (map[i] == player)
-		{
-			ft_putnbr_fd(i % coor->x, STDOUT_FILENO);
-			ft_putchar_fd(' ', STDOUT_FILENO);
-			ft_putnbr_fd(i / coor->x, STDOUT_FILENO);
-			ft_putchar_fd('\n', STDOUT_FILENO);
-			break ;
-		}
-		i++;
-	}
-
+	if (buf[10] == '2' || buf[6] == 'O')
+		return ('X');
+	else
+		return ('O');
 }
 
 /*
@@ -42,7 +31,7 @@ static void			find_first_coor(t_info *coor, char *map, char player)
 ** This is a string without newlines
 */
 
-static char			*create_map(int fd, t_info *coor) 				
+/*static char			*create_map(int fd, t_info *coor) 				
 {
 	int		i;
 	char	*map;
@@ -58,7 +47,7 @@ static char			*create_map(int fd, t_info *coor)
 		i++;
 	}
 	return (map);
-}
+}*/
 
 /*
 ** readinput gets the coordinates from the first line of the STDIN
@@ -66,21 +55,37 @@ static char			*create_map(int fd, t_info *coor)
 
 void				readinput(t_info *coor)
 {
-	char	*line;
-	char	*map;
+	int		ret;
 	int		fd;
 	char	player;
+	char	*buf;
 
-	fd = STDIN_FILENO;
+	ret = 1;
 	fd = open("test", O_RDONLY);
-	for (int i = 0; i < 9; i++)
-		get_next_line(fd, &line);
-	get_next_line(fd, &line);
-	player = 'O';
-	coor->y = ft_atoi(line + 8);
-	coor->x = ft_atoi(line + 8 + ft_getdigits(coor->x) + 1);
-	free (line);
-	map = create_map(fd, coor);
-	find_first_coor(coor, map, player);
+	fd = STDIN_FILENO;
+	player = 'X';
+	while (ret)
+	{
+		ret = get_next_line(fd, &buf);
+		if (ft_strlen(buf) == 0)
+			break ;
+		if (buf && buf[0] == '$')
+			player = get_player(buf);
+		if (buf && buf[0] == '<')
+			player = get_player(buf);
+		if (ret)
+			free(buf);
+	}
+	if (player == 'X')
+	{
+		coor->x = 14;
+		coor->y = 12;
+	}
+	else
+	{
+		coor->x = 2;
+		coor->y = 8;
+	}
+	printf("%i %i\n", coor->x, coor->y);
 	return ;
 }
