@@ -1,6 +1,5 @@
-seed = 3437
-X: timedout
-./fblom.filler: Segfault at 0
-./fblom.filler won
+seed = 9626
+O: error on input
+resources/players/carli.filler won
 Score:
-0AGAINST0
+0AGAINST167

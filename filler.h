@@ -27,6 +27,7 @@ typedef struct 				s_info
 	int						y;
 }							t_info;
 
-void						readinput(t_info *coor);
+char						*readinput(void);
+void						play_game(char *read);
 
 #endif

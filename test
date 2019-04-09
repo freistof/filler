@@ -1,12 +1,4 @@
-# -------------- VM  version 1.1 ------------- #
-#                                              #
-# 42 / filler VM Developped by: Hcao - Abanlin #
-#                                              #
-# -------------------------------------------- #
-launched resources/players/grati.filler
-$$$ exec p1 : [resources/players/grati.filler]
-launched ./fblom.filler
-$$$ exec p2 : [./fblom.filler]
+$$$ exec p1 : [./fblom.filler]
 Plateau 15 17:
     01234567890123456
 000 .................
@@ -27,4 +19,4 @@ Plateau 15 17:
 Piece 2 2:
 **
 **
-<got (O): [7, 2]
+<got (0): [7, 2]

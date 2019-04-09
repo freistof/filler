@@ -16,7 +16,7 @@ NAME = $(LOGIN).filler
 
 FLAGS = -Wall -Werror -Wextra
 
-SRCS = filler.c readinput.c
+SRCS = filler.c readinput.c playgame.c
 
 all: $(NAME)
 

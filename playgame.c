@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   filler.c                                           :+:    :+:            */
+/*   playgame.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fblom <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/04/08 13:15:20 by fblom         #+#    #+#                 */
-/*   Updated: 2019/04/08 13:15:21 by fblom         ########   odam.nl         */
+/*   Created: 2019/04/09 16:39:16 by fblom         #+#    #+#                 */
+/*   Updated: 2019/04/09 16:39:16 by fblom         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-/*
-**	The first steps is to read the current state of the board from the standard input.
-** 	See file readinput.c
-*/
-
-int			main(void)
+static char		get_player(char *input)
 {
-	char	*read;
+	if (input[0] == '$')
+	{
+		if (input[10] == '2')
+			return ('X');
+		return ('O');
+	}
+	if (input[6] == 'O')
+		return ('X');
+	return ('O');
+}
 
-	read = readinput();
-//	play_game(read);
-	return (0);
+void			play_game(char *read)
+{
+	char	player;
+
+	player = get_player(read);
+	printf("%c\n", player);
 }
