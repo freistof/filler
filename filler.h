@@ -18,16 +18,18 @@
 # include <stdio.h> // remove
 # include <fcntl.h> // remove ?
 
-# define PLATEAU "Plateau "
+//# define FD STDIN_FILENO
+# define FD 3
 
-
-typedef struct 				s_info
+typedef struct 				s_filler
 {
+	char					player;
 	int						x;
 	int						y;
-}							t_info;
+	char					*map;
+	char					*piece;
+}							t_filler;	
 
-char						*readinput(void);
-void						play_game(char *read);
+char						*get_map(char *line);
 
 #endif
