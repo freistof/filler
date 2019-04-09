@@ -22,7 +22,7 @@ SRCS = filler.c filler_map.c
 
 all: $(NAME)
 
-make:
+$(NAME):
 	make -C libft/
 	gcc -o $(NAME) $(FLAGS) $(SRCS) libft/libft.a
 
@@ -37,4 +37,4 @@ fclean: clean
 libre:
 	make -C libft/ re
 
-re: libre fclean make
+re: libre fclean all
