@@ -12,6 +12,8 @@
 
 LOGIN = fblom
 
+TRACE = filler.trace
+
 NAME = $(LOGIN).filler
 
 FLAGS = -Wall -Werror -Wextra
@@ -26,6 +28,7 @@ make:
 
 clean:
 	make -C libft/ clean
+	rm -f $(TRACE)
 
 fclean: clean
 	rm -f $(NAME)

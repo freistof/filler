@@ -38,7 +38,7 @@ static void					get_piece(t_filler *filler, char *line)
 //	printf("%s\n", filler->piece);
 }
 	
-static int					filler_loop(t_filler *filler)
+static void					filler_loop(t_filler *filler)
 {
 	int		ret;
 	char	*line;
@@ -56,8 +56,10 @@ static int					filler_loop(t_filler *filler)
 			get_piece(filler, line);
 			write (1, "8 2\n", 4);
 		}
+		else
+			return;
 	}
-	return (0);
+	return;
 }
 
 static int					define_player(char *line)
