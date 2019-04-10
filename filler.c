@@ -12,52 +12,29 @@
 
 #include "filler.h"
 
-static void					get_piece(t_filler *filler, char *line)
-{
-	int		i;
-	int		ret;
-	char	*temp;
-
-	i = 0;
-	ret = 0;
-	filler->x = ft_atoi(line + 6);
-	filler->y = ft_atoi(line + 6 + ft_getdigits(filler->x) + 1);
-	free(line);
-	filler->piece = malloc(sizeof(char) * (filler->x + 1) * filler->y + 1);
-	temp = filler->piece;
-	filler->piece[(filler->x + 1) * filler->y] = '\0';
-	while (i < filler->y)
-	{
-		get_next_line(FD, &line);
-		filler->piece = ft_strcpy(filler->piece, line);
-		filler->piece[filler->x] = '\n';
-		filler->piece += filler->x + 1;
-		i++;
-	}
-	filler->piece = temp;
-//	printf("%s\n", filler->piece);
-}
 	
 static void					filler_loop(t_filler *filler)
 {
-	int		ret;
-	char	*line;
-	char	*map;
+	int						ret;
+	char					*line;
 
-	map = NULL;
+	filler->map = NULL;
 	ret = 1;
-	while (ret > 0)
+	line = ft_strdup("Y");
+	while (ret > -1)
 	{
 		ret = get_next_line(FD, &line);
-		if (ft_strnequ("Plateau ", line, 8) & !map)
-			map = get_map(line);
+		FILE *fileno = fopen("testret", "w+");
+		fprintf(fileno, "%i\n", ret);
+		if (ft_strnequ("Plateau ", line, 8) && !filler->map)
+			filler->map = get_map(filler, line);
+		else if (ft_strnequ("Plateau ", line, 8))
+			filler->map = fill_map(filler->map, filler->mapy, filler->mapx);
 		else if (ft_strnequ("Piece ", line, 6))
 		{
-			get_piece(filler, line);
-			write (1, "8 2\n", 4);
+		//	get_piece(filler, line);
+			place_piece(filler);
 		}
-		else
-			return;
 	}
 	return;
 }
@@ -71,21 +48,30 @@ static int					define_player(char *line)
 	return (0);
 }
 
-int							main(void)
+static t_filler				*initialise_filler(void)
 {
-	t_filler	*filler;
-	char		*line;
+	t_filler 				*filler;
 
-	open("test", O_RDONLY);
 	filler = malloc(sizeof(t_filler));
 	filler->player = 0;
+	return (filler);
+}
+
+int							main(void)
+{
+	t_filler				*filler;
+	char					*line;
+
+//	open("test", O_RDONLY);
+	line = NULL;
+	filler = initialise_filler();
 	get_next_line(FD, &line);
-//	printf("%s\n", line);
 	if (line && ft_strnequ("$$$ exec p", line, 10))
 		filler->player = define_player(line);
 	if (!filler->player)
 		return (0);
-	free(line);
+	FILE *fileno = fopen("testret", "w+");
+	fprintf(fileno, "kut\n");
 	filler_loop(filler);
 	return (0);
 }

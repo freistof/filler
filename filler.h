@@ -18,18 +18,26 @@
 # include <stdio.h> // remove
 # include <fcntl.h> // remove ?
 
-//# define FD STDIN_FILENO
-# define FD 3
+
+# define FD STDIN_FILENO
+//# define FD 3
 
 typedef struct 				s_filler
 {
 	char					player;
+	int						mapx;
+	int						mapy;
+	char					*map;
 	int						x;
 	int						y;
-	char					*map;
 	char					*piece;
+	int						*xpiece;
+	int						*ypiece;
 }							t_filler;	
 
-char						*get_map(char *line);
+char						*get_map(t_filler *filler, char *line);
+char						*fill_map(char *map, int x, int y);
+void						get_piece(t_filler *filler, char *line);
+void						place_piece(t_filler *filler);
 
 #endif

@@ -18,23 +18,17 @@ NAME = $(LOGIN).filler
 
 FLAGS = -Wall -Werror -Wextra
 
-SRCS = filler.c filler_map.c
+SRCS = filler.c filler_map.c filler_piece.c
 
 all: $(NAME)
 
 $(NAME):
-	make -C libft/
 	gcc -o $(NAME) $(FLAGS) $(SRCS) libft/libft.a
 
 clean:
-	make -C libft/ clean
 	rm -f $(TRACE)
 
 fclean: clean
 	rm -f $(NAME)
-	make -C libft/ fclean
 
-libre:
-	make -C libft/ re
-
-re: libre fclean all
+re: fclean all
