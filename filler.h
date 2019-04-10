@@ -19,7 +19,7 @@
 # include <fcntl.h> // remove ?
 
 
-# define FD STDIN_FILENO
+# define FD 1
 //# define FD 3
 
 typedef struct 				s_filler

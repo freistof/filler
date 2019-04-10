@@ -21,11 +21,10 @@ void					place_piece(t_filler *filler)
 	{
 		if (filler->map[i] == filler->player)
 		{
-			ft_putnbr(((i + 1) / (filler->mapx + 1)) - 1);
+			ft_putnbr(((i + 1) / (filler->mapx + 1)));
 			ft_putchar(' ');
 			ft_putnbr((i + 1) % (filler->mapx + 1) - 1);
 			ft_putchar('\n');
-			return ;
 		}
 		i++;
 	}

@@ -16,8 +16,7 @@ char				*fill_map(char *map, int y, int x)
 		get_next_line(FD, &line);
 		map = ft_strcpy(map, line + 4);
 		map[x] = '\n';
-		if (i != y - 2)
-			map += x + 1;
+		map += x + 1;
 		i++;
 	}
 	return (temp);
@@ -29,10 +28,9 @@ char				*get_map(t_filler *filler, char *line)
 
 	filler->mapy = ft_atoi(line + 8);
 	filler->mapx = ft_atoi(line + 8 + ft_getdigits(filler->mapy) + 1);
+
 	map = malloc(sizeof(char) * (filler->mapy) * (filler->mapx + 1) + 1);
 	map[(filler->mapy) * (filler->mapx + 1)] = '\0';
 	map = fill_map(map, filler->mapy, filler->mapx);
-	FILE *fileno = fopen("testwrite", "w+");
-	fprintf(fileno, "%s\n", map);
 	return (map);
 }
