@@ -37,12 +37,9 @@ void					place_piece(t_filler *filler)
 void					get_piece(t_filler *filler, char *line)
 {
 	int		i;
-	int		ret;
 	char	*temp;
 
-	FILE *checker = fopen("checkerpiece", "w+");
 	i = 0;
-	ret = 0;
 	filler->y = ft_atoi(line + 6);
 	filler->x = ft_atoi(line + 6 + ft_getdigits(filler->y) + 1);
 	free(line);
@@ -52,31 +49,13 @@ void					get_piece(t_filler *filler, char *line)
 	while (i < filler->y)
 	{
 		get_next_line(0, &line);
-		fprintf(checker, "line: %s\n", line);
 		filler->piece = ft_strcpy(filler->piece, line);
 		filler->piece[filler->x + 1] = '\n';
 		filler->piece += filler->x + 1;
 		i++;
+		free (line);
 	}
-	//get_next_line(0, &line);
 	filler->piece = temp;
+	place_piece(filler);
+	free (filler->piece);
 }
-/*
-void					get_piece(t_filler *filler, char *line)
-{
-	int					i;
-	int					x;
-	int					y;
-
-	x = ft_atoi(line + 6);
-	y = ft_atoi(line + 6 + ft_getdigits(filler->x) + 1);
-	free(line);
-	filler->xpiece = malloc(sizeof(int) * x * y);
-	filler->ypiece = malloc(sizeof(int) * x * y);
-	while (i < y)
-	{
-		get_next_line(FD, &line);
-
-		i++;
-	}
-}*/

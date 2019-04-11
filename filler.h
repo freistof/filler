@@ -27,8 +27,6 @@ typedef struct 				s_filler
 	int						x;
 	int						y;
 	char					*piece;
-	int						*xpiece;
-	int						*ypiece;
 }							t_filler;	
 
 char						*get_map(t_filler *filler, char *line);

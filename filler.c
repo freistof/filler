@@ -16,35 +16,22 @@ static void					filler_loop(t_filler *filler)
 {
 	int						ret;
 	char					*line;
-	FILE 					*checker;
 
 	ret = 1;
-	checker = fopen("checker", "w+");
 	while (ret > -1)
 	{
 		ret = get_next_line(STDIN_FILENO, &line);
-		fprintf(checker, "line: %s\n", line);
-		if (!line || !ft_strlen(line))
+		if (!line)
 			continue ;
-		if (ft_strnequ("Plateau ", ft_strdup(line), 8))
-		{
-			fprintf(checker, "Plateau: \n");
+		if (ft_strnequ("Plateau ", line, 8) && !filler->map)
 			filler->map = get_map(filler, ft_strdup(line));
-		}
-		// else if (ft_strnequ("Plateau ", line, 8))
-		// 	filler->map = fill_map(filler->map, filler->mapy, filler->mapx);
+		else if (ft_strnequ("Plateau ", line, 8))
+			filler->map = fill_map(filler->map, filler->mapy, filler->mapx);
 		else if (ft_strnequ("Piece ", line, 6))
-		{
 			get_piece(filler, ft_strdup(line));
-			place_piece(filler);
-		}
-/*		ft_putnbr_fd(8, STDOUT_FILENO);
-		ft_putchar_fd(' ', STDOUT_FILENO);
-		ft_putnbr_fd(2, STDOUT_FILENO);
-		ft_putchar_fd('\n', STDOUT_FILENO);*/
 		free(line);
 	}
-	return;
+	free (filler->map);
 }
 
 static int					define_player(char *line)
@@ -62,6 +49,7 @@ static t_filler				*initialise_filler(void)
 
 	filler = malloc(sizeof(t_filler));
 	filler->player = 0;
+	filler->map = NULL;
 	return (filler);
 }
 
