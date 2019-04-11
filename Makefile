@@ -18,12 +18,12 @@ NAME = $(LOGIN).filler
 
 FLAGS = -Wall -Werror -Wextra
 
-SRCS = filler.c filler_map.c filler_piece.c
+SRCS = filler.c filler_map.c filler_piece.c helpers.c
 
 all: $(NAME)
 
 $(NAME):
-	gcc -o $(NAME) $(FLAGS) $(SRCS) libft/libft.a
+	gcc -o $(NAME) $(FLAGS) $(SRCS) libft/libft.a libftprintf.a
 
 clean:
 	rm -f $(TRACE)

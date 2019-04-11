@@ -90,7 +90,7 @@ size_t				ft_substring_count(const char *s, char c);
 size_t				ft_substring_size(const char *s, char c);
 int					ft_getdigits(int n);
 void				*ft_memrcpy(void *dst, const void *src, size_t n);
-int                 get_next_line(int fd, char **line);
+int					get_next_line(int fd, char **line);
 int					linelen(char *str, char c);
 
 #endif

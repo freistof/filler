@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "filler.h"
-	
+
 static void					filler_loop(t_filler *filler)
 {
 	int						ret;
@@ -20,18 +20,18 @@ static void					filler_loop(t_filler *filler)
 	ret = 1;
 	while (ret > -1)
 	{
-		ret = get_next_line(STDIN_FILENO, &line);
+		ret = get_next_line(0, &line);
 		if (!line)
 			continue ;
 		if (ft_strnequ("Plateau ", line, 8) && !filler->map)
-			filler->map = get_map(filler, ft_strdup(line));
+			filler->map = get_map(filler, line);
 		else if (ft_strnequ("Plateau ", line, 8))
-			filler->map = fill_map(filler->map, filler->mapy, filler->mapx);
+			filler->map = fill_map(filler, filler->mapy, 1);
 		else if (ft_strnequ("Piece ", line, 6))
-			get_piece(filler, ft_strdup(line));
+			get_piece(filler, line);
 		free(line);
 	}
-	free (filler->map);
+	free(filler->map);
 }
 
 static int					define_player(char *line)
@@ -45,7 +45,7 @@ static int					define_player(char *line)
 
 static t_filler				*initialise_filler(void)
 {
-	t_filler 				*filler;
+	t_filler				*filler;
 
 	filler = malloc(sizeof(t_filler));
 	filler->player = 0;
@@ -58,13 +58,11 @@ int							main(void)
 	t_filler				*filler;
 	char					*line;
 
-	line = NULL;
-	open("test", O_RDONLY);
 	filler = initialise_filler();
-	get_next_line(STDIN_FILENO, &line);
+	get_next_line(0, &line);
 	if (line && ft_strnequ("$$$ exec p", line, 10))
 		filler->player = define_player(line);
-	free (line);
+	free(line);
 	filler_loop(filler);
 	return (0);
 }
