@@ -15,19 +15,23 @@
 void					place_piece(t_filler *filler)
 {
 	int i;
+	int x;
+	int y;
 
 	i = 0;
 	while (filler->map[i] != '\0')
 	{
 		if (filler->map[i] == filler->player)
 		{
-			ft_putnbr(((i + 1) / (filler->mapx + 1)));
-			ft_putchar(' ');
-			ft_putnbr((i + 1) % (filler->mapx + 1) - 1);
-			ft_putchar('\n');
+			x = (i + 1) / (filler->mapx + 1);
+			y = (i + 1) % (filler->mapx + 1) - 1;
 		}
 		i++;
 	}
+	ft_putnbr(x);
+	ft_putchar(' ');
+	ft_putnbr(y);
+	ft_putchar('\n');
 }
 
 void					get_piece(t_filler *filler, char *line)
@@ -36,6 +40,7 @@ void					get_piece(t_filler *filler, char *line)
 	int		ret;
 	char	*temp;
 
+	FILE *checker = fopen("checkerpiece", "w+");
 	i = 0;
 	ret = 0;
 	filler->y = ft_atoi(line + 6);
@@ -46,13 +51,14 @@ void					get_piece(t_filler *filler, char *line)
 	temp = filler->piece;
 	while (i < filler->y)
 	{
-		get_next_line(FD, &line);
+		get_next_line(0, &line);
+		fprintf(checker, "line: %s\n", line);
 		filler->piece = ft_strcpy(filler->piece, line);
 		filler->piece[filler->x + 1] = '\n';
 		filler->piece += filler->x + 1;
 		i++;
 	}
-	get_next_line(FD, &line);
+	//get_next_line(0, &line);
 	filler->piece = temp;
 }
 /*

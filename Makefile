@@ -23,7 +23,7 @@ SRCS = filler.c filler_map.c filler_piece.c
 all: $(NAME)
 
 $(NAME):
-	gcc -o $(NAME) $(FLAGS) $(SRCS) libft/libft.a
+	gcc -o $(NAME) $(SRCS) libft/libft.a
 
 clean:
 	rm -f $(TRACE)

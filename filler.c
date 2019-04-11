@@ -16,20 +16,33 @@ static void					filler_loop(t_filler *filler)
 {
 	int						ret;
 	char					*line;
+	FILE 					*checker;
 
 	ret = 1;
-	while (ret > 0)
+	checker = fopen("checker", "w+");
+	while (ret > -1)
 	{
-		ret = get_next_line(STDIN_FILENO, &line);	
-		if (ft_strnequ("Plateau ", line, 8))
-			filler->map = get_map(filler, line);
-		else if (ft_strnequ("Plateau ", line, 8))
-			filler->map = fill_map(filler->map, filler->mapy, filler->mapx);
+		ret = get_next_line(STDIN_FILENO, &line);
+		fprintf(checker, "line: %s\n", line);
+		if (!line || !ft_strlen(line))
+			continue ;
+		if (ft_strnequ("Plateau ", ft_strdup(line), 8))
+		{
+			fprintf(checker, "Plateau: \n");
+			filler->map = get_map(filler, ft_strdup(line));
+		}
+		// else if (ft_strnequ("Plateau ", line, 8))
+		// 	filler->map = fill_map(filler->map, filler->mapy, filler->mapx);
 		else if (ft_strnequ("Piece ", line, 6))
 		{
-			get_piece(filler, line);
+			get_piece(filler, ft_strdup(line));
 			place_piece(filler);
 		}
+/*		ft_putnbr_fd(8, STDOUT_FILENO);
+		ft_putchar_fd(' ', STDOUT_FILENO);
+		ft_putnbr_fd(2, STDOUT_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);*/
+		free(line);
 	}
 	return;
 }
@@ -60,7 +73,7 @@ int							main(void)
 	line = NULL;
 	open("test", O_RDONLY);
 	filler = initialise_filler();
-	get_next_line(FD, &line);
+	get_next_line(STDIN_FILENO, &line);
 	if (line && ft_strnequ("$$$ exec p", line, 10))
 		filler->player = define_player(line);
 	free (line);
