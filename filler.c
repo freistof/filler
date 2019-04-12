@@ -21,7 +21,7 @@ static void					filler_loop(t_filler *filler)
 	while (ret > -1)
 	{
 		ret = get_next_line(0, &line);
-		if (!line || !ft_strlen(line))
+		if (!line)
 			continue ;
 		if (ft_strnequ("Plateau ", line, 8) && !filler->map)
 			filler->map = get_map(filler, line);
@@ -34,12 +34,18 @@ static void					filler_loop(t_filler *filler)
 	free(filler->map);
 }
 
-static int					define_player(char *line)
+static int					define_player(char *line, t_filler *filler)
 {
 	if (line[10] == '1')
-		return ('O');
+	{
+		filler->player = 'O';
+		filler->enemy = 'X';
+	}
 	else if (line[10] == '2')
-		return ('X');
+	{
+		filler->player = 'X';
+		filler->enemy = 'O';
+	}
 	return (0);
 }
 
@@ -49,6 +55,7 @@ static t_filler				*initialise_filler(void)
 
 	filler = malloc(sizeof(t_filler));
 	filler->player = 0;
+	filler->enemy = 0;
 	filler->map = NULL;
 	return (filler);
 }
@@ -61,7 +68,7 @@ int							main(void)
 	filler = initialise_filler();
 	get_next_line(0, &line);
 	if (line && ft_strnequ("$$$ exec p", line, 10))
-		filler->player = define_player(line);
+		define_player(line, filler);
 	free(line);
 	filler_loop(filler);
 	return (0);

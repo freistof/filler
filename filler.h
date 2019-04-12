@@ -19,9 +19,12 @@
 # include <fcntl.h>
 # include <stdio.h> // remove
 
+# define COOR
+
 typedef struct				s_filler
 {
 	char					player;
+	char					enemy;
 	int						mapx;
 	int						mapy;
 	char					*map;
@@ -39,3 +42,4 @@ void						get_piece(t_filler *filler, char *line);
 char						*get_y_lines(int y, char *string, int start);
 
 #endif
+

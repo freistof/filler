@@ -21,7 +21,10 @@ static int										fit_piece(t_filler *filler, int i)
 	count = 0;
 	while (fi < filler->size)
 	{
-		if (filler->map[i + filler->size * filler->x[fi] + filler->y[fi]] == filler->player)
+		if (filler->map[i + filler->mapx * filler->y[fi] + filler->x[fi]] == filler->enemy ||
+			filler->map[i + filler->mapx * filler->y[fi] + filler->x[fi]] == filler->enemy + 32)
+			return (0);
+		if (filler->map[(i + filler->mapx * filler->y[fi] + filler->x[fi])] == filler->player)
 			count++;
 		fi++;
 	}
@@ -36,17 +39,19 @@ static void                                    place_piece(t_filler *filler)
        int x;
        int y;
 
+       x = 0;
+       y = 0;
        i = 0;
        while (filler->map[i] != '\0')
        {
-               if (fit_piece(filler, i))
-               {
-                       x = i / filler->mapx;
-                       y = i % filler->mapx;
-               }
+			if (fit_piece(filler, i))
+			{
+				y = i / filler->mapx;
+				x = i % filler->mapx;
+			}
                i++;
        }
-       ft_printf("%i %i\n", x, y);
+       ft_printf("%i %i\n", y, x);
 }
 
 static void                                    make_piece_arrays(int size, char *piece, t_filler *filler)
@@ -62,8 +67,8 @@ static void                                    make_piece_arrays(int size, char 
        {
             if (piece[i] == '*')
             {
-                    filler->x[arr_i] = i / filler->piecex;
-                    filler->y[arr_i] = i % filler->piecex;
+                    filler->x[arr_i] = i % filler->piecex;
+                    filler->y[arr_i] = i / filler->piecex;
                     arr_i++;
                }
             i++;
