@@ -18,7 +18,7 @@ char				*fill_map(t_filler *filler, int y, int notfirst)
 	char	*line;
 
 	i = 0;
-	get_next_line(0, &line);
+	get_next_line(FD, &line);
 	free(line);
 	if (notfirst)
 		ft_bzero(filler->map, filler->mapy * (filler->mapx + 1) + 1);

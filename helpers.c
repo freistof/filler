@@ -20,7 +20,7 @@ char			*get_y_lines(int y, char *string, int start)
 	i = 0;
 	while (i < y)
 	{
-		get_next_line(0, &line);
+		get_next_line(FD, &line);
 		string = ft_strcat(string, line + start);
 		i++;
 		free(line);

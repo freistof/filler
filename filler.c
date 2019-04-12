@@ -20,7 +20,7 @@ static void					filler_loop(t_filler *filler)
 	ret = 1;
 	while (ret > -1)
 	{
-		ret = get_next_line(0, &line);
+		ret = get_next_line(FD, &line);
 		if (!line)
 			continue ;
 		if (ft_strnequ("Plateau ", line, 8) && !filler->map)
@@ -65,8 +65,9 @@ int							main(void)
 	t_filler				*filler;
 	char					*line;
 
+//	open("test", O_RDONLY);
 	filler = initialise_filler();
-	get_next_line(0, &line);
+	get_next_line(FD, &line);
 	if (line && ft_strnequ("$$$ exec p", line, 10))
 		define_player(line, filler);
 	free(line);

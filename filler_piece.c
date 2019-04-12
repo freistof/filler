@@ -12,19 +12,31 @@
 
 #include "filler.h"
 
-static int										fit_piece(t_filler *filler, int i)
+static int						real_pos(t_filler *filler, int i, int fi)
+{
+	return (i + filler->mapx * filler->y[fi] + filler->x[fi]);
+}
+
+static int						fit_piece(t_filler *filler, int i)
 {
 	int		fi;
 	int		count;
-
+	
 	fi = 0;
 	count = 0;
 	while (fi < filler->size)
 	{
-		if (filler->map[i + filler->mapx * filler->y[fi] + filler->x[fi]] == filler->enemy ||
-			filler->map[i + filler->mapx * filler->y[fi] + filler->x[fi]] == filler->enemy + 32)
+		// i / filler->mapx = Y
+		// i % filler->mapx = X
+//    printf("%i\n%i\n\n", real_pos(filler, i, fi) / filler->mapx, filler->y[fi]);
+/*		if (real_pos(filler, i, fi) / filler->mapx == filler->y[fi])
 			return (0);
-		if (filler->map[(i + filler->mapx * filler->y[fi] + filler->x[fi])] == filler->player)
+    if (real_pos(filler, i, fi) % filler->mapx == filler->x[fi])
+      return (0);*/
+		if (filler->map[real_pos(filler, i, fi)] == filler->enemy ||
+			filler->map[real_pos(filler, i, fi)] == filler->enemy + 32)
+			return (0);
+		if (filler->map[real_pos(filler, i, fi)] == filler->player)
 			count++;
 		fi++;
 	}
@@ -33,7 +45,7 @@ static int										fit_piece(t_filler *filler, int i)
 	return (0);
 }
 
-static void                                    place_piece(t_filler *filler)
+static void                               	place_piece(t_filler *filler)
 {
        int i;
        int x;
@@ -54,7 +66,7 @@ static void                                    place_piece(t_filler *filler)
        ft_printf("%i %i\n", y, x);
 }
 
-static void                                    make_piece_arrays(int size, char *piece, t_filler *filler)
+static void                               	make_piece_arrays(int size, char *piece, t_filler *filler)
 {
        int             i;
        int             arr_i;
@@ -75,7 +87,7 @@ static void                                    make_piece_arrays(int size, char 
        }
 }
 
-static int                                     piece_size(t_filler *filler)
+static int                                	piece_size(t_filler *filler)
 {
        int             i;
        int             count;
@@ -92,7 +104,7 @@ static int                                     piece_size(t_filler *filler)
        return (count);
 }
 
-void                                           get_piece(t_filler *filler, char *line)
+void                                      	get_piece(t_filler *filler, char *line)
 {
        int             i;
 

@@ -19,7 +19,8 @@
 # include <fcntl.h>
 # include <stdio.h> // remove
 
-# define COOR
+# define FD 0
+//# define FD 3
 
 typedef struct				s_filler
 {
