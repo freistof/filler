@@ -30,7 +30,7 @@ char				*get_map(t_filler *filler, char *line)
 {
 	filler->mapy = ft_atoi(line + 8);
 	filler->mapx = ft_atoi(line + 8 + ft_getdigits(filler->mapy) + 1);
-	filler->map = ft_strnew(filler->mapy * (filler->mapx + 1) + 1);
+	filler->map = ft_strnew(filler->mapy * filler->mapx + 1);
 	filler->map = fill_map(filler, filler->mapy, 0);
 	return (filler->map);
 }

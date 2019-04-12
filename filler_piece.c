@@ -23,8 +23,8 @@ static void					place_piece(t_filler *filler)
 	{
 		if (filler->map[i] == filler->player)
 		{
-			x = (i + 1) / (filler->mapx + 1);
-			y = (i + 1) % (filler->mapx + 1) - 1;
+			x = i / filler->mapx;
+			y = i % filler->mapx;
 		}
 		i++;
 	}
@@ -44,8 +44,8 @@ static void					make_piece_arrays(int size, char *piece, t_filler *filler)
 	{
 		if (piece[i] == '*')
 		{
-			filler->x[arr_i] = (i + 1) / (filler->piecex + 1);
-			filler->y[arr_i] = (i + 1) % (filler->piecex + 1) - 1;
+			filler->x[arr_i] = (i + 1) / (filler->piecex);
+			filler->y[arr_i] = (i + 1) % (filler->piecex) - 1;
 			arr_i++;
 		}
 		i++;
@@ -76,7 +76,7 @@ void						get_piece(t_filler *filler, char *line)
 	i = 0;
 	filler->piecey = ft_atoi(line + 6);
 	filler->piecex = ft_atoi(line + 6 + ft_getdigits(filler->piecey) + 1);
-	filler->piece = ft_strnew(filler->piecey * (filler->piecex + 1) + 1);
+	filler->piece = ft_strnew(filler->piecey * filler->piecex + 1);
 	filler->piece = get_y_lines(filler->piecey, filler->piece, 0);
 	make_piece_arrays(piece_size(filler), filler->piece, filler);
 	free(filler->piece);
