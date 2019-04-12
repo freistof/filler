@@ -21,7 +21,7 @@ static void					filler_loop(t_filler *filler)
 	while (ret > -1)
 	{
 		ret = get_next_line(0, &line);
-		if (!line)
+		if (!line || !ft_strlen(line))
 			continue ;
 		if (ft_strnequ("Plateau ", line, 8) && !filler->map)
 			filler->map = get_map(filler, line);
