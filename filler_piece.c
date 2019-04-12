@@ -44,8 +44,8 @@ static void					make_piece_arrays(int size, char *piece, t_filler *filler)
 	{
 		if (piece[i] == '*')
 		{
-			filler->x[arr_i] = (i + 1) / (filler->piecex);
-			filler->y[arr_i] = (i + 1) % (filler->piecex) - 1;
+			filler->x[arr_i] = i / filler->piecex;
+			filler->y[arr_i] = i % filler->piecex;
 			arr_i++;
 		}
 		i++;
