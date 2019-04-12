@@ -20,7 +20,6 @@
 # include <stdio.h> // remove
 
 # define FD 0
-//# define FD 3
 
 typedef struct				s_filler
 {
@@ -28,6 +27,7 @@ typedef struct				s_filler
 	char					enemy;
 	int						mapx;
 	int						mapy;
+	int						mapsize;
 	char					*map;
 	int						*x;
 	int						*y;
