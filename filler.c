@@ -12,6 +12,14 @@
 
 #include "filler.h"
 
+/*
+** while there is no error, gets the next line
+** if line is "Plateau x y" get_map()
+** mallocs map if it doesn't exist yet (see initalise_filler)
+** else fill_map() updates the map
+** moves on to get_piece function to find the correct place
+*/
+
 static void					filler_loop(t_filler *filler)
 {
 	int						ret;
@@ -34,7 +42,11 @@ static void					filler_loop(t_filler *filler)
 	free(filler->map);
 }
 
-static int					define_player(char *line, t_filler *filler)
+/*
+** defines player and enemy chars
+*/
+
+static int					define_players(char *line, t_filler *filler)
 {
 	if (line[10] == '1')
 	{
@@ -49,6 +61,11 @@ static int					define_player(char *line, t_filler *filler)
 	return (0);
 }
 
+/*
+** mallocs and initialises the filler so player, map, and enemy
+** can be defined
+*/
+
 static t_filler				*initialise_filler(void)
 {
 	t_filler				*filler;
@@ -60,17 +77,25 @@ static t_filler				*initialise_filler(void)
 	return (filler);
 }
 
+/*
+** the main check the first line to define the player
+** if there is no line or no player defined, return (0)
+*/
+
 int							main(void)
 {
 	t_filler				*filler;
 	char					*line;
 
-//	open("test", O_RDONLY);
+	open("test", O_RDONLY);
 	filler = initialise_filler();
 	get_next_line(FD, &line);
 	if (line && ft_strnequ("$$$ exec p", line, 10))
-		define_player(line, filler);
+		define_players(line, filler);
+	else
+		return (0);
 	free(line);
-	filler_loop(filler);
+	if (filler->player)
+		filler_loop(filler);
 	return (0);
 }

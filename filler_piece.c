@@ -12,6 +12,16 @@
 
 #include "filler.h"
 
+/*
+** blocks could be formatted like this:
+** ..*
+** ..*
+** where the asterixes need to overlap with the current map,
+** but the coordinates of the top left corner should be given
+** real_pos() defines the position of the stars to check if
+** there is already an obstacle or not
+*/
+
 static int						real_pos(t_filler *filler, int i, int fi)
 {
 	return (i + filler->mapx * filler->y[fi] + filler->x[fi]);
@@ -21,6 +31,7 @@ static int            out_of_map(t_filler *filler, int i)
 {
 	int		fi;
 	int		pos[filler->size];
+	int		dif;
 
 	fi = 0;
 	while (fi < filler->size)
@@ -28,23 +39,20 @@ static int            out_of_map(t_filler *filler, int i)
 		pos[fi] = real_pos(filler, i, fi) / filler->mapx;
 		fi++;
 	}
-	while (pos[0] > filler->y[0] || pos[1] > filler->y[1] || pos[2] > filler->y[2])
-	{
-		fi = 0;
-		while (fi < filler->size)
-		{
-			pos[fi]--;
-			fi++;
-		}
-	}
+	dif = pos[0] - filler->y[0];
+	fi = 0;
 	while (fi < filler->size)
 	{
-		if (pos[fi] != filler->y[fi])
+		if (filler->y[fi] + dif != pos[fi])
 			return (1);
 		fi++;
 	}
 	return (0);
 }
+
+/*
+** 
+*/
 
 static int						fit_piece(t_filler *filler, int i)
 {
@@ -62,7 +70,8 @@ static int						fit_piece(t_filler *filler, int i)
 		if (filler->map[real_pos(filler, i, fi)] == filler->enemy ||
 			filler->map[real_pos(filler, i, fi)] == filler->enemy + 32)
 			return (0);
-		if (filler->map[real_pos(filler, i, fi)] == filler->player)
+		if (filler->map[real_pos(filler, i, fi)] == filler->player ||
+			filler->map[real_pos(filler, i, fi)] == filler->player + 32)
 			count++;
 		fi++;
 	}
@@ -70,6 +79,11 @@ static int						fit_piece(t_filler *filler, int i)
 		return (1);
 	return (0);
 }
+
+/*
+** loops through map string and checks if piece fits with fit_piece()
+** defines y and x coordinates and prints them
+*/
 
 static void                               	place_piece(t_filler *filler)
 {
@@ -80,17 +94,24 @@ static void                               	place_piece(t_filler *filler)
 	   x = 0;
 	   y = 0;
 	   i = 0;
-	   while (filler->map[i] != '\0')
-	   {
+	   while (i < filler->mapsize)
+		{
 			if (fit_piece(filler, i))
 			{
-				y = i / filler->mapx;
-				x = i % filler->mapx;
+				if (i / filler->mapx + filler->piecey < filler->mapy)
+					y = i / filler->mapx;
+				if (i % filler->mapx + filler->piecex < filler->mapx)
+					x = i % filler->mapx;
 			}
-			   i++;
-	   }
-	   ft_printf("%i %i\n", y, x);
+			i++;
+		}
+		ft_printf("%i %i\n", y, x);
 }
+
+/*
+** mallocs and reads from the filler->piece string
+** then puts x and y coordinates in the int arrays accordingly
+*/
 
 static void                               	make_piece_arrays(int size, char *piece, t_filler *filler)
 {
@@ -113,6 +134,10 @@ static void                               	make_piece_arrays(int size, char *pie
 	   }
 }
 
+/*
+** determines the size of the int arrays that contain the piece data
+*/
+
 static int                                	piece_size(t_filler *filler)
 {
 	   int             i;
@@ -129,6 +154,13 @@ static int                                	piece_size(t_filler *filler)
 	   filler->size = count;
 	   return (count);
 }
+
+/*
+** gets x and y values of piece from the line read in filler_loop()
+** mallocs a string accordingly and then writes in it in get_y_lines()
+** makes int arrays in make_piece_arrays()
+** moves on to place piece
+*/
 
 void                                      	get_piece(t_filler *filler, char *line)
 {
