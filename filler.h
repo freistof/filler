@@ -20,7 +20,7 @@
 # include <stdio.h> // remove
 
 # define FD 3
-# define LOWERCASE + 32
+# define LOWERCASE +32
 
 typedef struct				s_filler
 {
@@ -46,6 +46,7 @@ void						get_piece(t_filler *filler, char *line);
 void						place_piece(t_filler *filler);
 
 void						score_map(t_filler *filler, int i, int score);
+void						score_map_minus(t_filler *filler, int input, int score);
 
 char						*get_y_lines(int y, char *string, int start);
 

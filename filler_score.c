@@ -14,60 +14,55 @@
 
 int				filler_enemy(t_filler *filler, char c)
 {
-	if (c == filler->enemy || c == filler->enemy + LOWERCASE)
+	if (c == filler->enemy)
 		return (1);
 	return (0);
 }
 
 int				define_y(t_filler *filler, int i)
 {
-	if (i != 0)
-		return (i / filler->mapx);
+	return (i / filler->mapx);
 	return (0);
 }
 
 int				define_x(t_filler *filler, int i)
 {
-	if (i != 0)
-		return (i % filler->mapx);
+	return (i % filler->mapx);
 	return (0);
 }
 
-void			score_map(t_filler *filler, int i, int score)
+void			score_map(t_filler *filler, int input, int score)
 {
-	if (filler_enemy(filler, filler->map[i]))
-	{
-		filler->score[i] = 0;
-		score = 0;
-	}
-	else if (filler->score[i] != 0)
-		filler->score[i] = score;
+	int		i;
 
-	if (i + 1 < filler->mapsize)
-	{
-		printf("score: %i\n", score);
-		printf("%i\n", i);
-		score_map(filler, i + 1, score + 1);
-	}
+	i = input;
+	filler->score[i] = score;
 
-	if (i - 1 > 0)
+	if (i - 1 > 0 && define_y(filler, i) == define_y(filler, i - 1))
 	{
-		printf("score: %i\n", score);
-		printf("%i\n", i);
 		score_map(filler, i - 1, score + 1);
 	}
-
+	i = input;
 	if (i + filler->mapx < filler->mapsize)
 	{
-		printf("score: %i\n", score);
-		printf("%i\n", i);
 		score_map(filler, i + filler->mapx, score + 1);
 	}
 
+}
+
+void			score_map_minus(t_filler *filler, int input, int score)
+{
+	int			i;
+
+	i = input;
+	filler->score[i] = score;
+	if (i + 1 < filler->mapsize && define_y(filler, i) == define_y(filler, i + 1))
+	{
+		score_map(filler, i + 1, score + 1);
+	}
+	i = input;
 	if (i - filler->mapx > 0)
 	{
-		printf("score: %i\n", score);
-		printf("%i\n", i);
 		score_map(filler, i - filler->mapx, score + 1);
 	}
 }

@@ -57,8 +57,9 @@ char				*get_map(t_filler *filler, char *line)
 	filler->map = ft_strnew(filler->mapsize + 1);
 	filler->map = fill_map(filler, filler->mapy, 0);
 	filler->score = malloc(sizeof(int) * filler->mapsize);
-	printf("mapsize: %i\nmapx: %i\n, mapy %i\n", filler->mapsize, filler->mapx, filler->mapy);
+	printf("mapsize: %i\nmapx: %i\nmapy %i\n", filler->mapsize, filler->mapx, filler->mapy);
 	score_map(filler, first_enemy(filler), 0);
+	score_map_minus(filler, first_enemy(filler), 0);
 	for (int i = 0; i < filler->mapsize; i++)
 		printf("%c\t%i\n", filler->map[i], filler->score[i]);
 	return (filler->map);
