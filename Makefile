@@ -18,7 +18,8 @@ NAME = $(LOGIN).filler
 
 FLAGS = -Wall -Werror -Wextra
 
-SRCS = filler.c filler_map.c filler_piece.c make_piece.c helpers.c
+SRCS = filler.c filler_map.c filler_piece.c make_piece.c helpers.c \
+		filler_score.c
 
 all: $(NAME)
 
