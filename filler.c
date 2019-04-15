@@ -26,7 +26,7 @@ static void					filler_loop(t_filler *filler)
 	char					*line;
 
 	ret = 1;
-	while (ret > -1)
+	while (ret > 0)
 	{
 		ret = get_next_line(FD, &line);
 		if (!line)

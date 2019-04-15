@@ -19,7 +19,7 @@
 # include <fcntl.h>
 # include <stdio.h> // remove
 
-# define FD 0
+# define FD 3
 
 typedef struct				s_filler
 {
@@ -39,8 +39,10 @@ typedef struct				s_filler
 
 char						*get_map(t_filler *filler, char *line);
 char						*fill_map(t_filler *filler, int y, int notfirst);
+
 void						get_piece(t_filler *filler, char *line);
+void						place_piece(t_filler *filler);
+
 char						*get_y_lines(int y, char *string, int start);
 
 #endif
-

@@ -12,6 +12,10 @@
 
 #include "filler.h"
 
+/*
+** gets y lines and strcats them
+*/
+
 char			*get_y_lines(int y, char *string, int start)
 {
 	int			i;
