@@ -33,8 +33,8 @@ int				define_x(t_filler *filler, int i)
 
 int			*score_map(t_filler *filler, int i, int score)
 {
-/*	if (i < 0 || i >= filler->mapsize)
-		return (filler->score);*/
+	if (i < 0 || i >= filler->mapsize)
+		return (filler->score);
 	if (filler->score[i] == -1)
 		filler->score[i] = score;
 	if (define_y(filler, i) == define_y(filler, i - 1))
@@ -46,8 +46,8 @@ int			*score_map(t_filler *filler, int i, int score)
 
 int			*score_map_two(t_filler *filler, int i, int score)
 {
-/*	if (i < 0 || i >= filler->ma*/
-/*		return (filler->score);*/
+	if (i < 0 || i >= filler->mapsize)
+		return (filler->score);
 	if (filler->score[i] == -1)
 		filler->score[i] = score;
 	if (define_y(filler, i) == define_y(filler, i + 1))
