@@ -38,7 +38,7 @@ int					first_enemy(t_filler *filler)
 	i = 0;
 	while (filler->map[i] != '\0')
 	{
-		if (filler->map[i] == filler->enemy || filler->map[i] == filler->enemy + LOWERCASE)
+		if (filler->map[i] == filler->enemy || filler->map[i] == filler->enemy + 32)
 			return (i);
 		i++;
 	}
@@ -56,11 +56,17 @@ char				*get_map(t_filler *filler, char *line)
 	filler->mapsize = filler->mapy * filler->mapx;
 	filler->map = ft_strnew(filler->mapsize + 1);
 	filler->map = fill_map(filler, filler->mapy, 0);
-	filler->score = malloc(sizeof(int) * filler->mapsize);
+ 	filler->score = malloc(sizeof(int) * filler->mapsize);
 	printf("mapsize: %i\nmapx: %i\nmapy %i\n", filler->mapsize, filler->mapx, filler->mapy);
-	score_map(filler, first_enemy(filler), 0);
-	score_map_minus(filler, first_enemy(filler), 0);
 	for (int i = 0; i < filler->mapsize; i++)
-		printf("%c\t%i\n", filler->map[i], filler->score[i]);
+		filler->score[i] = -1;
+	score_map(filler, first_enemy(filler), 0);
+	score_map_two(filler, first_enemy(filler), 0);
+	for (int i = 0; i < filler->mapy; i++)
+	{
+		for (int j = 0; j < filler->mapx; j++)
+			printf("%c\t%i\t", filler->map[i * filler->mapx + j], filler->score[i * filler->mapx + j]);
+		printf("\n");
+	}
 	return (filler->map);
 }

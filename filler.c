@@ -37,7 +37,7 @@ static void					filler_loop(t_filler *filler)
 			filler->map = fill_map(filler, filler->mapy, 1);
 		else if (ft_strnequ("Piece ", line, 6))
 			get_piece(filler, line);
-		free(line);
+		//free(line);
 	}
 	free(filler->map);
 }
