@@ -37,9 +37,9 @@ int			*score_map(t_filler *filler, int i, int score)
 		return (filler->score);
 	if (filler->score[i] == -1)
 		filler->score[i] = score;
-	if (define_y(filler, i) == define_y(filler, i - 1))
+	if (define_y(filler, i) == define_y(filler, i - 1) && filler->score[i - 1] == -1)
 		filler->score = score_map(filler, i - 1, score + 1);
-	if (i - filler->mapx >= 0)
+	if (i - filler->mapx >= 0 && filler->score[i - filler->mapx] == -1)
 		filler->score = score_map(filler, i - filler->mapx, score + 1);
 	return (filler->score);
 }
@@ -50,30 +50,9 @@ int			*score_map_two(t_filler *filler, int i, int score)
 		return (filler->score);
 	if (filler->score[i] == -1)
 		filler->score[i] = score;
-	if (define_y(filler, i) == define_y(filler, i + 1))
+	if (define_y(filler, i) == define_y(filler, i + 1) && filler->score[i + 1] == -1)
 		filler->score = score_map(filler, i + 1, score + 1);
-	if (i + filler->mapx <= filler->mapsize)
+	if (i + filler->mapx <= filler->mapsize && filler->score[i + filler->mapx] == -1)
 		filler->score = score_map(filler, i + filler->mapx, score + 1);
 	return (filler->score);
 }
-
-/*
-void			score_map_three(t_filler *filler, int i, int score)
-{
-	if (i < 0 || i >= filler->mapsize)
-		return ;
-	if (filler->score[i] == -1)
-		filler->score[i] = score;
-	if (i - filler->mapx > 0)
-		score_map(filler, i - filler->mapx, score + 1);
-}
-
-void			score_map_four(t_filler *filler, int i, int score)
-{
-	if (i < 0 || i >= filler->mapsize)
-		return ;
-	if (filler->score[i] == -1)
-		filler->score[i] = score;
-	if (i + filler->mapx < filler->mapsize)
-	score_map(filler, i + filler->mapx, score + 1);
-}*/
