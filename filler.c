@@ -26,22 +26,27 @@ static void					filler_loop(t_filler *filler)
 	char					*line;
 	char					*save;
 
+	FILE*					test;
+	test = fopen("checker", "w!");
 	ret = 1;
 	while (ret > 0)
 	{
 		ret = get_next_line(FD, &line);
+		fprintf(test, "%p\n", line);
 		save = line;
-		if (!line || !ft_strlen(line))
-		{
-			ft_strdel(&line);
+		if (!line)
 			continue ;
-		}
 		if (ft_strnequ("Plateau ", line, 8) && !filler->map)
 			filler->map = get_map(filler, line);
 		else if (ft_strnequ("Plateau ", line, 8))
 			filler->map = fill_map(filler, filler->mapy, 1);
 		else if (ft_strnequ("Piece ", line, 6))
 			get_piece(filler, line);
+		else
+		{
+			ft_strdel(&line);
+			continue ;
+		}
 		ft_strdel(&line);
 	}
 	ft_strdel(&filler->map);

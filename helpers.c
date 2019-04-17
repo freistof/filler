@@ -27,7 +27,7 @@ char			*get_y_lines(int y, char *string, int start)
 		get_next_line(FD, &line);
 		string = ft_strcat(string, line + start);
 		i++;
-//		ft_strdel(&line);
+		ft_strdel(&line);
 	}
 	return (string);
 }
