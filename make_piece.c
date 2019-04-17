@@ -76,7 +76,7 @@ void				get_piece(t_filler *filler, char *line)
 	filler->piece = ft_strnew(filler->piecey * filler->piecex + 1);
 	filler->piece = get_y_lines(filler->piecey, filler->piece, 0);
 	make_piece_arrays(piece_size(filler), filler->piece, filler);
-	free(filler->piece);
+	ft_strdel(&(filler->piece));
 	place_piece(filler);
 	free(filler->x);
 	free(filler->y);

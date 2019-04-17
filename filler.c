@@ -24,22 +24,27 @@ static void					filler_loop(t_filler *filler)
 {
 	int						ret;
 	char					*line;
+	char					*save;
 
 	ret = 1;
 	while (ret > 0)
 	{
 		ret = get_next_line(FD, &line);
-		if (!line)
+		save = line;
+		if (!line || !ft_strlen(line))
+		{
+			ft_strdel(&line);
 			continue ;
+		}
 		if (ft_strnequ("Plateau ", line, 8) && !filler->map)
 			filler->map = get_map(filler, line);
 		else if (ft_strnequ("Plateau ", line, 8))
 			filler->map = fill_map(filler, filler->mapy, 1);
 		else if (ft_strnequ("Piece ", line, 6))
 			get_piece(filler, line);
-		//free(line);
+		ft_strdel(&line);
 	}
-	free(filler->map);
+	ft_strdel(&filler->map);
 }
 
 /*
@@ -94,7 +99,7 @@ int							main(void)
 		define_players(line, filler);
 	else
 		return (0);
-	free(line);
+	ft_strdel(&line);
 	if (filler->player)
 		filler_loop(filler);
 	return (0);

@@ -87,6 +87,21 @@ static int			fit_piece(t_filler *filler, int i)
 	return (0);
 }
 
+static unsigned int			get_points(t_filler *filler, int i)
+{
+	int				points;
+	int				fi;
+
+	fi = 0;
+	points = 0;
+	while (fi < filler->size)
+	{
+		points += filler->score[real_pos(filler, i, fi)];
+		fi++;
+	}
+	return (points);
+}
+
 /*
 ** loops through map string and checks if piece fits with fit_piece()
 ** defines y and x coordinates and prints them
@@ -97,19 +112,23 @@ void				place_piece(t_filler *filler)
 	int				i;
 	int				x;
 	int				y;
+	unsigned int	points;
 
 	x = 0;
 	y = 0;
 	i = 0;
+	points = -1;
 	while (i < filler->mapsize)
 	{
 		if (fit_piece(filler, i))
 		{
 			if (i / filler->mapx + filler->piecey <= filler->mapy && \
-				i % filler->mapx + filler->piecex <= filler->mapx)
+				i % filler->mapx + filler->piecex <= filler->mapx &&
+				get_points(filler, i) < points)
 			{
 				x = i % filler->mapx;
 				y = i / filler->mapx;
+				points = get_points(filler, i);
 			}
 		}
 		i++;

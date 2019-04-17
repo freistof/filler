@@ -12,26 +12,7 @@
 
 #include "filler.h"
 
-/*
-** first skips the first line (because it just shows the index)
-** updates or fills map with y_lines function
-*/
-
-char				*fill_map(t_filler *filler, int y, int notfirst)
-{
-	int				i;
-	char			*line;
-
-	i = 0;
-	get_next_line(FD, &line);
-	free(line);
-	if (notfirst)
-		ft_bzero(filler->map, filler->mapy * (filler->mapx + 1) + 1);
-	filler->map = get_y_lines(y, filler->map, 4);
-	return (filler->map);
-}
-
-int					first_enemy(t_filler *filler)
+static int			first_enemy(t_filler *filler)
 {
 	int i;
 
@@ -46,6 +27,52 @@ int					first_enemy(t_filler *filler)
 }
 
 /*
+** mallocs the score map if it's the first time
+** initalises points to zero
+** fills the score map with scores (filler_score.c)
+*/
+
+int					*fill_score_map(t_filler *filler)
+{
+	int				i;
+
+	i = 0;
+	filler->start = first_enemy(filler);
+	while (i < filler->mapsize)
+	{
+		filler->score[i] = -1;
+		i++;
+	}
+	score_map(filler, filler->start - 1, 0);
+	score_map_two(filler, filler->start + 1, 0);
+	score_map_three(filler, filler->start + filler->mapx, 0);
+	score_map_four(filler, filler->start - filler->mapx, 0);
+	return (filler->score);
+}
+
+/*
+** first skips the first line (because it just shows the index)
+** updates or fills map with y_lines function
+*/
+
+char				*fill_map(t_filler *filler, int y, int notfirst)
+{
+	int				i;
+	char			*line;
+
+	i = 0;
+	get_next_line(FD, &line);
+	ft_strdel(&line);
+	if (notfirst)
+		ft_bzero(filler->map, filler->mapy * (filler->mapx + 1) + 1);
+	filler->map = get_y_lines(y, filler->map, 4);
+	filler->score = fill_score_map(filler);
+	return (filler->map);
+}
+
+
+
+/*
 ** mallocs enough space for map according to input from first line above map
 */
 
@@ -55,18 +82,7 @@ char				*get_map(t_filler *filler, char *line)
 	filler->mapx = ft_atoi(line + 8 + ft_getdigits(filler->mapy) + 1);
 	filler->mapsize = filler->mapy * filler->mapx;
 	filler->map = ft_strnew(filler->mapsize + 1);
+	filler->score = malloc(sizeof(int) * filler->mapsize);
 	filler->map = fill_map(filler, filler->mapy, 0);
- 	filler->score = malloc(sizeof(int) * filler->mapsize);
-	printf("mapsize: %i\nmapx: %i\nmapy %i\n", filler->mapsize, filler->mapx, filler->mapy);
-	for (int i = 0; i < filler->mapsize; i++)
-		filler->score[i] = -1;
-	score_map(filler, first_enemy(filler), 0);
-	score_map_two(filler, first_enemy(filler), 0);
-	for (int i = 0; i < filler->mapy; i++)
-	{
-		for (int j = 0; j < filler->mapx; j++)
-			printf("%c\t%i\t", filler->map[i * filler->mapx + j], filler->score[i * filler->mapx + j]);
-		printf("\n");
-	}
 	return (filler->map);
 }
