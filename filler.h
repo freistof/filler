@@ -39,11 +39,14 @@ typedef struct				s_filler
 	char					*piece;
 }							t_filler;
 
-char						*get_map(t_filler *filler, char *line);
+char						*get_map(t_filler *filler, const char *line);
 char						*fill_map(t_filler *filler, int y, int notfirst);
 
-void						get_piece(t_filler *filler, char *line);
+void						get_piece(t_filler *filler, const char *line);
 void						place_piece(t_filler *filler);
+
+
+void						four_directions_map(t_filler *filler, int i);
 
 int							*score_map(t_filler *filler, int i, int score);
 int							*score_map_two(t_filler *filler, int i, int score);

@@ -21,9 +21,9 @@ static char		*ft_createsave(char *buf, char *str, char **line, int ret)
 		save = NULL;
 	else
 		save = ft_strdup(&buf[linelen(buf, '\n')] + 1);
-	free(buf);
+	ft_strdel(&buf); //free(buf);
 	if (str)
-		free(str);
+		ft_strdel(&str); //(str);
 	return (save);
 }
 
@@ -38,15 +38,15 @@ static char		*ft_makestr(const int fd, char *save, char **line)
 	ret = ft_strlen(str);
 	if (str[linelen(str, '\n')] == '\n')
 		return (ft_createsave(save, str, line, ret));
-	free(save);
+	ft_strdel(&save); //free(save);
 	ret = read(fd, buf, BUFF_SIZE);
 	while (ret > 0)
 	{
 		temp = ft_strdup(str);
-		free(str);
+		ft_strdel(&str); //free(str);
 		buf[ret] = '\0';
 		str = ft_strjoin(temp, buf);
-		free(temp);
+		ft_strdel(&temp); //free(temp);
 		if (str[linelen(str, '\n')] == '\n')
 			return (ft_createsave(ft_strdup(buf), str, line, ret));
 		ft_strclr(buf);
@@ -84,7 +84,7 @@ static char		*fd_checker(const int fd, char *save)
 		save = ft_strdup(list->content);
 	else
 	{
-		free(list->content);
+		ft_memdel(&list->content); // free(list->content);
 		list->content = save;
 	}
 	list = head;
@@ -104,7 +104,7 @@ int				get_next_line(const int fd, char **line)
 	{
 		if (read(fd, save, BUFF_SIZE) == 0)
 		{
-			free(save);
+			ft_strdel(&save); //sfree(save);
 			return (0);
 		}
 	}

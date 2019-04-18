@@ -12,6 +12,10 @@
 
 #include "filler.h"
 
+/*
+** finds the first position that contains an enemy character
+*/
+
 static int			first_enemy(t_filler *filler)
 {
 	int i;
@@ -43,10 +47,7 @@ int					*fill_score_map(t_filler *filler)
 		filler->score[i] = -1;
 		i++;
 	}
-	score_map(filler, filler->start - 1, 0);
-	score_map_two(filler, filler->start + 1, 0);
-	score_map_three(filler, filler->start + filler->mapx, 0);
-	score_map_four(filler, filler->start - filler->mapx, 0);
+	four_directions_map(filler, filler->start);
 	return (filler->score);
 }
 
@@ -58,9 +59,11 @@ int					*fill_score_map(t_filler *filler)
 char				*fill_map(t_filler *filler, int y, int notfirst)
 {
 	int				i;
+	int				ret;
 	char			*line;
 
 	i = 0;
+	ret = 1;
 	get_next_line(FD, &line);
 	ft_strdel(&line);
 	if (notfirst)
@@ -76,12 +79,14 @@ char				*fill_map(t_filler *filler, int y, int notfirst)
 ** mallocs enough space for map according to input from first line above map
 */
 
-char				*get_map(t_filler *filler, char *line)
+char				*get_map(t_filler *filler, const char *line)
 {
 	filler->mapy = ft_atoi(line + 8);
 	filler->mapx = ft_atoi(line + 8 + ft_getdigits(filler->mapy) + 1);
 	filler->mapsize = filler->mapy * filler->mapx;
-	filler->map = ft_strnew(filler->mapsize + 1);
+	while (!filler->map)
+		filler->map = ft_strnew(filler->mapsize + 1);
+	while (!filler->score)
 	filler->score = malloc(sizeof(int) * filler->mapsize);
 	filler->map = fill_map(filler, filler->mapy, 0);
 	return (filler->map);

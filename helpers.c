@@ -19,15 +19,16 @@
 char			*get_y_lines(int y, char *string, int start)
 {
 	int			i;
+	int			ret;
 	char		*line;
 
 	i = 0;
 	while (i < y)
 	{
-		get_next_line(FD, &line);
+		ret = get_next_line(FD, &line);
 		string = ft_strcat(string, line + start);
 		i++;
-		ft_strdel(&line);
+//		ft_strdel(&line);
 	}
 	return (string);
 }

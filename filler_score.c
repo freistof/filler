@@ -28,11 +28,10 @@ int				define_x(t_filler *filler, int i)
 {
 	return (i % filler->mapx);
 }
-
-int			*score_map(t_filler *filler, int i, int score)
+void		make_score_map(t_filler *filler, int i, int score, int *dir)
 {
 	if (i < 0 || i >= filler->mapsize)
-		return (filler->score);
+		return ;
 	if (filler->map[i] == filler->enemy)
 	{
 		filler->score[i] = 0;
@@ -40,63 +39,26 @@ int			*score_map(t_filler *filler, int i, int score)
 	}
 	if (filler->score[i] == -1)
 		filler->score[i] = score;
-	if (define_y(filler, i) == define_y(filler, i - 1) && filler->score[i - 1] == -1)
-		filler->score = score_map(filler, i - 1, score + 1);
-	if (i - filler->mapx >= 0 && filler->score[i - filler->mapx] == -1)
-		filler->score = score_map(filler, i - filler->mapx, score + 1);
-	return (filler->score);
+	if (define_y(filler, i) == define_y(filler, i + dir[0]) && filler->score[i + dir[0]] == -1)
+		make_score_map(filler, i + dir[0], score + 1, dir);
+	if (i + dir[1] >= 0 && filler->score[i + dir[1]] == -1)
+		make_score_map(filler, i + dir[1], score + 1, dir);
 }
 
-int			*score_map_two(t_filler *filler, int i, int score)
+void		four_directions_map(t_filler *filler, int i)
 {
-	if (i < 0 || i >= filler->mapsize)
-		return (filler->score);
-	if (filler->map[i] == filler->enemy)
-	{
-		filler->score[i] = 0;
-		score = 0;
-	}
-	if (filler->score[i] == -1)
-		filler->score[i] = score;
-	if (define_y(filler, i) == define_y(filler, i + 1) && filler->score[i + 1] == -1)
-		filler->score = score_map_two(filler, i + 1, score + 1);
-	if (i + filler->mapx <= filler->mapsize && filler->score[i + filler->mapx] == -1)
-		filler->score = score_map_two(filler, i + filler->mapx, score + 1);
-	return (filler->score);
-}
+	int		dir[2];
 
-int			*score_map_three(t_filler *filler, int i, int score)
-{
-	if (i < 0 || i >= filler->mapsize)
-		return (filler->score);
-	if (filler->map[i] == filler->enemy)
-	{
-		filler->score[i] = 0;
-		score = 0;
-	}
-	if (filler->score[i] == -1)
-		filler->score[i] = score;
-	if (define_y(filler, i) == define_y(filler, i - 1) && filler->score[i - 1] == -1)
-		filler->score = score_map_three(filler, i - 1, score + 1);
-	if (i + filler->mapx <= filler->mapsize && filler->score[i + filler->mapx] == -1)
-		filler->score = score_map_three(filler, i + filler->mapx, score + 1);
-	return (filler->score);
-}
-
-int			*score_map_four(t_filler *filler, int i, int score)
-{
-	if (i < 0 || i >= filler->mapsize)
-		return (filler->score);
-	if (filler->map[i] == filler->enemy)
-	{
-		filler->score[i] = 0;
-		score = 0;
-	}
-	if (filler->score[i] == -1)
-		filler->score[i] = score;
-	if (define_y(filler, i) == define_y(filler, i + 1) && filler->score[i + 1] == -1)
-		filler->score = score_map_four(filler, i + 1, score + 1);
-	if (i - filler->mapx <= filler->mapsize && filler->score[i - filler->mapx] == -1)
-		filler->score = score_map_four(filler, i - filler->mapx, score + 1);
-	return (filler->score);
+	dir[0] = -1;
+	dir[1] = -filler->mapx;
+	make_score_map(filler, i, 0, dir);
+	dir[0] = +1;
+	dir[1] = +filler->mapx;
+	make_score_map(filler, i, 0, dir);
+	dir[0] = -1;
+	dir[1] = +filler->mapx;
+	make_score_map(filler, i, 0, dir);
+	dir[0] = 1;
+	dir[1] = -filler->mapx;
+	make_score_map(filler, i, 0, dir);
 }

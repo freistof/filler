@@ -24,29 +24,19 @@ static void					filler_loop(t_filler *filler)
 {
 	int						ret;
 	char					*line;
-	char					*save;
 
-	FILE*					test;
-	test = fopen("checker", "w!");
 	ret = 1;
 	while (ret > 0)
 	{
 		ret = get_next_line(FD, &line);
-		fprintf(test, "%p\n", line);
-		save = line;
 		if (!line)
 			continue ;
 		if (ft_strnequ("Plateau ", line, 8) && !filler->map)
-			filler->map = get_map(filler, line);
+			filler->map = get_map(filler, ft_strdup(line));
 		else if (ft_strnequ("Plateau ", line, 8))
 			filler->map = fill_map(filler, filler->mapy, 1);
-		else if (ft_strnequ("Piece ", line, 6))
+		else if (ft_strnequ("Piece ", ft_strdup(line), 6))
 			get_piece(filler, line);
-		else
-		{
-			ft_strdel(&line);
-			continue ;
-		}
 		ft_strdel(&line);
 	}
 	ft_strdel(&filler->map);
@@ -84,6 +74,7 @@ static t_filler				*initialise_filler(void)
 	filler->player = 0;
 	filler->enemy = 0;
 	filler->map = NULL;
+	filler->score = NULL;
 	return (filler);
 }
 
@@ -97,7 +88,6 @@ int							main(void)
 	t_filler				*filler;
 	char					*line;
 
-	open("test", O_RDONLY);
 	filler = initialise_filler();
 	get_next_line(FD, &line);
 	if (line && ft_strnequ("$$$ exec p", line, 10))

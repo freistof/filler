@@ -66,7 +66,7 @@ static int			piece_size(t_filler *filler)
 ** moves on to place piece
 */
 
-void				get_piece(t_filler *filler, char *line)
+void				get_piece(t_filler *filler, const char *line)
 {
 	int				i;
 
