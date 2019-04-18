@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 static char		*ft_createsave(char *buf, char *str, char **line, int ret)
 {
@@ -20,10 +21,10 @@ static char		*ft_createsave(char *buf, char *str, char **line, int ret)
 	if (str[0] == '\0' && ret == 0)
 		save = NULL;
 	else
-		save = ft_strdup(&buf[linelen(buf, '\n')] + 1);
-	ft_strdel(&buf); //free(buf);
+		save = ft_strdup(buf + linelen(buf, '\n') + 1);
+	ft_strdel(&buf);
 	if (str)
-		ft_strdel(&str); //(str);
+		ft_strdel(&str);
 	return (save);
 }
 
@@ -38,15 +39,16 @@ static char		*ft_makestr(const int fd, char *save, char **line)
 	ret = ft_strlen(str);
 	if (str[linelen(str, '\n')] == '\n')
 		return (ft_createsave(save, str, line, ret));
-	ft_strdel(&save); //free(save);
+	ft_strdel(&save);
 	ret = read(fd, buf, BUFF_SIZE);
 	while (ret > 0)
 	{
 		temp = ft_strdup(str);
-		ft_strdel(&str); //free(str);
+		ft_strdel(&str);
 		buf[ret] = '\0';
 		str = ft_strjoin(temp, buf);
-		ft_strdel(&temp); //free(temp);
+		ft_strdel(&temp); //free(temp); // SEEMS TO BE THE CULPRIT
+		temp = NULL;
 		if (str[linelen(str, '\n')] == '\n')
 			return (ft_createsave(ft_strdup(buf), str, line, ret));
 		ft_strclr(buf);
@@ -84,7 +86,7 @@ static char		*fd_checker(const int fd, char *save)
 		save = ft_strdup(list->content);
 	else
 	{
-		ft_memdel(&list->content); // free(list->content);
+		ft_memdel(&list->content);
 		list->content = save;
 	}
 	list = head;
@@ -93,7 +95,7 @@ static char		*fd_checker(const int fd, char *save)
 
 int				get_next_line(const int fd, char **line)
 {
-	char			*save;
+	static char			*save;
 
 	save = NULL;
 	if (fd == -1 || read(fd, save, 0) == -1)
@@ -104,7 +106,7 @@ int				get_next_line(const int fd, char **line)
 	{
 		if (read(fd, save, BUFF_SIZE) == 0)
 		{
-			ft_strdel(&save); //sfree(save);
+			ft_strdel(&save);
 			return (0);
 		}
 	}

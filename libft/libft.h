@@ -92,5 +92,6 @@ int					ft_getdigits(int n);
 void				*ft_memrcpy(void *dst, const void *src, size_t n);
 int					get_next_line(int fd, char **line);
 int					linelen(char *str, char c);
+size_t				ft_strlchr(char *s, char c, size_t len);
 
 #endif

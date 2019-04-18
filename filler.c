@@ -26,17 +26,19 @@ static void					filler_loop(t_filler *filler)
 	char					*line;
 
 	ret = 1;
-	while (ret > 0)
+	while (ret > -1)
 	{
 		ret = get_next_line(FD, &line);
 		if (!line)
 			continue ;
 		if (ft_strnequ("Plateau ", line, 8) && !filler->map)
-			filler->map = get_map(filler, ft_strdup(line));
+			filler->map = get_map(filler, line);
 		else if (ft_strnequ("Plateau ", line, 8))
 			filler->map = fill_map(filler, filler->mapy, 1);
-		else if (ft_strnequ("Piece ", ft_strdup(line), 6))
+		else if (ft_strnequ("Piece ", line, 6))
 			get_piece(filler, line);
+		if (!ft_strlen(line))
+			break ;
 		ft_strdel(&line);
 	}
 	ft_strdel(&filler->map);

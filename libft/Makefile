@@ -30,7 +30,7 @@ SRCS = ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c \
 		ft_itoa.c ft_strndup.c ft_lstnew.c ft_lstdelone.c ft_lstdel.c \
 		ft_lstadd.c ft_lstiter.c ft_lstmap.c ft_reversestring.c \
 		ft_substringcount.c ft_substringsize.c ft_getdigits.c ft_memrcpy.c \
-		get_next_line.c linelen.c
+		get_next_line.c linelen.c ft_strlchr.c
 
 OSRC = ft_bzero.o ft_isalnum.o ft_isalpha.o ft_isascii.o ft_isdigit.o \
 		ft_isprint.o ft_tolower.o ft_toupper.o ft_memset.o ft_putstr.o \
@@ -46,7 +46,7 @@ OSRC = ft_bzero.o ft_isalnum.o ft_isalpha.o ft_isascii.o ft_isdigit.o \
 		ft_itoa.o ft_strndup.o ft_lstnew.o ft_lstdelone.o ft_lstdel.o \
 		ft_lstadd.o ft_lstiter.o ft_lstmap.o ft_reversestring.o \
 		ft_substringcount.o ft_substringsize.o ft_getdigits.o ft_memrcpy.o \
-		get_next_line.o linelen.o
+		get_next_line.o linelen.o ft_strlchr.o
 
 
 all: $(NAME)
