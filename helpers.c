@@ -32,3 +32,43 @@ char			*get_y_lines(int y, char *string, int start)
 	}
 	return (string);
 }
+
+int				no_zeroes(int *array, int len)
+{
+	int			i;
+
+	i = 0;
+	while (i < len)
+	{
+		if (array[i] == 0)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void			move_piece_top_left(t_filler *filler)
+{
+	int			i;
+
+	while (no_zeroes(filler->x, filler->piecex))
+	{
+		i = 0;
+		while (i < filler->piecex)
+		{
+			filler->x[i]--;
+			i++;
+			filler->xshift++;
+		}
+	}
+	while (no_zeroes(filler->y, filler->piecey))
+	{
+		i = 0;
+		while (i < filler->piecey)
+		{
+			filler->y[i]--;
+			i++;
+			filler->yshift++;
+		}
+	}
+}

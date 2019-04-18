@@ -36,6 +36,9 @@ static void			make_piece_arrays(int size, char *piece, t_filler *filler)
 		}
 		i++;
 	}
+/*	filler->xshift = 0;
+	filler->yshift = 0;
+	move_piece_top_left(filler);*/
 }
 
 /*

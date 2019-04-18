@@ -33,6 +33,8 @@ typedef struct				s_filler
 	int						start;
 	int						*x;
 	int						*y;
+	int						xshift;
+	int						yshift;
 	int						size;
 	int						piecex;
 	int						piecey;
@@ -44,6 +46,7 @@ char						*fill_map(t_filler *filler, int y, int notfirst);
 
 void						get_piece(t_filler *filler, const char *line);
 void						place_piece(t_filler *filler);
+void						move_piece_top_left(t_filler *filler);
 
 
 void						four_directions_map(t_filler *filler, int i);

@@ -87,6 +87,11 @@ static int			fit_piece(t_filler *filler, int i)
 	return (0);
 }
 
+/*
+** gives pieces a score depending on the score map
+** the closer to the enemy, the lower the points
+*/
+
 static unsigned int			get_points(t_filler *filler, int i)
 {
 	int				points;
@@ -126,8 +131,8 @@ void				place_piece(t_filler *filler)
 				i % filler->mapx + filler->piecex <= filler->mapx &&
 				get_points(filler, i) < points)
 			{
-				x = i % filler->mapx;
-				y = i / filler->mapx;
+				x = i % filler->mapx + filler->xshift;
+				y = i / filler->mapx + filler->yshift;
 				points = get_points(filler, i);
 			}
 		}
