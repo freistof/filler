@@ -90,6 +90,7 @@ int							main(void)
 	t_filler				*filler;
 	char					*line;
 
+	open("test", O_RDONLY);
 	filler = initialise_filler();
 	get_next_line(FD, &line);
 	if (line && ft_strnequ("$$$ exec p", line, 10))

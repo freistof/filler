@@ -51,24 +51,24 @@ void			move_piece_top_left(t_filler *filler)
 {
 	int			i;
 
-	while (no_zeroes(filler->x, filler->piecex))
+	while (no_zeroes(filler->x, filler->size))
 	{
 		i = 0;
-		while (i < filler->piecex)
+		while (i < filler->size)
 		{
 			filler->x[i]--;
-			i++;
-			filler->xshift++;
+			i++;	
 		}
+		filler->xshift++;
 	}
-	while (no_zeroes(filler->y, filler->piecey))
+	while (no_zeroes(filler->y, filler->size))
 	{
 		i = 0;
-		while (i < filler->piecey)
+		while (i < filler->size)
 		{
 			filler->y[i]--;
-			i++;
-			filler->yshift++;
+			i++;	
 		}
+		filler->yshift++;
 	}
 }

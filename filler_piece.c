@@ -131,8 +131,8 @@ void				place_piece(t_filler *filler)
 				i % filler->mapx + filler->piecex <= filler->mapx &&
 				get_points(filler, i) < points)
 			{
-				x = i % filler->mapx + filler->xshift;
-				y = i / filler->mapx + filler->yshift;
+				x = i % filler->mapx - filler->xshift;
+				y = i / filler->mapx - filler->yshift;
 				points = get_points(filler, i);
 			}
 		}
