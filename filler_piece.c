@@ -129,7 +129,7 @@ void						place_piece(t_filler *filler)
 		{
 			if (i / filler->mapx + filler->piecey <= filler->mapy && \
 				i % filler->mapx + filler->piecex <= filler->mapx &&
-				get_points(filler, i) < points)
+				get_points(filler, i) <= points)
 			{
 				x = i % filler->mapx - filler->xshift;
 				y = i / filler->mapx - filler->yshift;

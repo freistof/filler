@@ -33,6 +33,10 @@ char			*get_y_lines(int y, char *string, int start)
 	return (string);
 }
 
+/*
+** checks if at least one of the ints in the int array is zero
+*/
+
 int				no_zeroes(int *array, int len)
 {
 	int			i;
@@ -46,6 +50,11 @@ int				no_zeroes(int *array, int len)
 	}
 	return (1);
 }
+
+/*
+** moves piece to top left position in cell
+** determines the x/y shift accordingly
+*/
 
 void			move_piece_top_left(t_filler *filler)
 {

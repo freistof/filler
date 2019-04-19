@@ -13,7 +13,7 @@
 #include "filler.h"
 
 /*
-** while there is no error, gets the next line
+** while there is a line, gets the next line
 ** if line is "Plateau x y" get_map()
 ** mallocs map if it doesn't exist yet (see initalise_filler)
 ** else fill_map() updates the map
