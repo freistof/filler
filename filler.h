@@ -17,7 +17,6 @@
 # include "ft_printf.h"
 # include <unistd.h>
 # include <fcntl.h>
-# include <stdio.h> // remove
 
 # define FD 0
 

@@ -46,7 +46,7 @@ static char		*ft_makestr(const int fd, char *save, char **line)
 		ft_strdel(&str);
 		buf[ret] = '\0';
 		str = ft_strjoin(temp, buf);
-		ft_strdel(&temp); //free(temp); // SEEMS TO BE THE CULPRIT
+		ft_strdel(&temp);
 		temp = NULL;
 		if (str[ft_substring_size(str, '\n')] == '\n')
 			return (ft_createsave(ft_strdup(buf), str, line, ret));
