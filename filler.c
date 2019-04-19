@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "filler.h"
+#include <stdio.h> // remove
 
 /*
 ** while there is a line, gets the next line
@@ -91,12 +92,8 @@ int							main(void)
 	open("test", O_RDONLY);
 	filler = initialise_filler();
 	get_next_line(FD, &line);
-	if (line && ft_strnequ("$$$ exec p", line, 10))
-		define_players(line, filler);
-	else
-		return (0);
+	define_players(line, filler);
 	ft_strdel(&line);
-	if (filler->player)
-		filler_loop(filler);
+	filler_loop(filler);
 	return (0);
 }
