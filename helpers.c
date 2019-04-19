@@ -57,7 +57,7 @@ void			move_piece_top_left(t_filler *filler)
 		while (i < filler->size)
 		{
 			filler->x[i]--;
-			i++;	
+			i++;
 		}
 		filler->xshift++;
 	}
@@ -67,7 +67,7 @@ void			move_piece_top_left(t_filler *filler)
 		while (i < filler->size)
 		{
 			filler->y[i]--;
-			i++;	
+			i++;
 		}
 		filler->yshift++;
 	}

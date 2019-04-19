@@ -12,23 +12,24 @@
 
 #include "filler.h"
 
-int				filler_enemy(t_filler *filler, char c)
+int					filler_enemy(t_filler *filler, char c)
 {
 	if (c == filler->enemy)
 		return (1);
 	return (0);
 }
 
-int				define_y(t_filler *filler, int i)
+int					define_y(t_filler *filler, int i)
 {
 	return (i / filler->mapx);
 }
 
-int				define_x(t_filler *filler, int i)
+int					define_x(t_filler *filler, int i)
 {
 	return (i % filler->mapx);
 }
-void		make_score_map(t_filler *filler, int i, int score, int *dir)
+
+void				make_score_map(t_filler *filler, int i, int score, int *dir)
 {
 	if (i < 0 || i >= filler->mapsize)
 		return ;
@@ -39,13 +40,14 @@ void		make_score_map(t_filler *filler, int i, int score, int *dir)
 	}
 	if (filler->score[i] == -1)
 		filler->score[i] = score;
-	if (define_y(filler, i) == define_y(filler, i + dir[0]) && filler->score[i + dir[0]] == -1)
+	if (define_y(filler, i) == define_y(filler, i + dir[0])
+		&& filler->score[i + dir[0]] == -1)
 		make_score_map(filler, i + dir[0], score + 1, dir);
 	if (i + dir[1] >= 0 && filler->score[i + dir[1]] == -1)
 		make_score_map(filler, i + dir[1], score + 1, dir);
 }
 
-void		four_directions_map(t_filler *filler, int i)
+void				four_directions_map(t_filler *filler, int i)
 {
 	int		dir[2];
 

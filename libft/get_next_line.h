@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   get_next_line.h                                    :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nde-wild <marvin@codam.nl>                   +#+                     */
+/*   By: fbom <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/02/09 17:32:19 by nde-wild      #+#    #+#                 */
-/*   Updated: 2019/02/09 17:32:23 by nde-wild      ########   odam.nl         */
+/*   Created: 2019/02/13 17:32:19 by fblom         #+#    #+#                 */
+/*   Updated: 2019/02/13 17:32:23 by fblom         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   get_next_line_try2.c                               :+:    :+:            */
+/*   get_next_line.c                                    :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nde-wild <marvin@codam.nl>                   +#+                     */
+/*   By: fblom <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/02/12 19:27:01 by nde-wild      #+#    #+#                 */
-/*   Updated: 2019/02/17 12:47:13 by nde-wild      ########   odam.nl         */
+/*   Created: 2019/01/30 16:47:16 by fblom         #+#    #+#                 */
+/*   Updated: 2019/01/30 16:47:16 by fblom         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 static char		*ft_createsave(char *buf, char *str, char **line, int ret)
 {
 	char	*save;
 
-	*line = ft_strsub(str, 0, linelen(str, '\n'));
+	*line = ft_strsub(str, 0, ft_substring_size(str, '\n'));
 	if (str[0] == '\0' && ret == 0)
 		save = NULL;
 	else
-		save = ft_strdup(buf + linelen(buf, '\n') + 1);
+		save = ft_strdup(buf + ft_substring_size(buf, '\n') + 1);
 	ft_strdel(&buf);
 	if (str)
 		ft_strdel(&str);
@@ -37,7 +36,7 @@ static char		*ft_makestr(const int fd, char *save, char **line)
 
 	str = ft_strdup(save);
 	ret = ft_strlen(str);
-	if (str[linelen(str, '\n')] == '\n')
+	if (str[ft_substring_size(str, '\n')] == '\n')
 		return (ft_createsave(save, str, line, ret));
 	ft_strdel(&save);
 	ret = read(fd, buf, BUFF_SIZE);
@@ -49,7 +48,7 @@ static char		*ft_makestr(const int fd, char *save, char **line)
 		str = ft_strjoin(temp, buf);
 		ft_strdel(&temp); //free(temp); // SEEMS TO BE THE CULPRIT
 		temp = NULL;
-		if (str[linelen(str, '\n')] == '\n')
+		if (str[ft_substring_size(str, '\n')] == '\n')
 			return (ft_createsave(ft_strdup(buf), str, line, ret));
 		ft_strclr(buf);
 		ret = read(fd, buf, BUFF_SIZE);

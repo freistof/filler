@@ -23,7 +23,8 @@ static int			first_enemy(t_filler *filler)
 	i = 0;
 	while (filler->map[i] != '\0')
 	{
-		if (filler->map[i] == filler->enemy || filler->map[i] == filler->enemy + 32)
+		if (filler->map[i] == filler->enemy ||
+			filler->map[i] == filler->enemy + 32)
 			return (i);
 		i++;
 	}
@@ -72,8 +73,6 @@ char				*fill_map(t_filler *filler, int y, int notfirst)
 	filler->score = fill_score_map(filler);
 	return (filler->map);
 }
-
-
 
 /*
 ** mallocs enough space for map according to input from first line above map

@@ -22,7 +22,7 @@
 ** there is already an obstacle or not
 */
 
-static int			real_pos(t_filler *filler, int i, int fi)
+static int					real_pos(t_filler *filler, int i, int fi)
 {
 	return (i + filler->mapx * filler->y[fi] + filler->x[fi]);
 }
@@ -32,11 +32,11 @@ static int			real_pos(t_filler *filler, int i, int fi)
 ** if x and y values still correspond with original values
 */
 
-static int			out_of_map(t_filler *filler, int i)
+static int					out_of_map(t_filler *filler, int i)
 {
-	int				fi;
-	int				pos[filler->size];
-	int				dif;
+	int						fi;
+	int						pos[filler->size];
+	int						dif;
 
 	fi = 0;
 	while (fi < filler->size)
@@ -61,10 +61,10 @@ static int			out_of_map(t_filler *filler, int i)
 ** enemy pieces
 */
 
-static int			fit_piece(t_filler *filler, int i)
+static int					fit_piece(t_filler *filler, int i)
 {
-	int				fi;
-	int				count;
+	int						fi;
+	int						count;
 
 	fi = 0;
 	count = 0;
@@ -94,8 +94,8 @@ static int			fit_piece(t_filler *filler, int i)
 
 static unsigned int			get_points(t_filler *filler, int i)
 {
-	int				points;
-	int				fi;
+	int						points;
+	int						fi;
 
 	fi = 0;
 	points = 0;
@@ -112,12 +112,12 @@ static unsigned int			get_points(t_filler *filler, int i)
 ** defines y and x coordinates and prints them
 */
 
-void				place_piece(t_filler *filler)
+void						place_piece(t_filler *filler)
 {
-	int				i;
-	int				x;
-	int				y;
-	unsigned int	points;
+	int						i;
+	int						x;
+	int						y;
+	unsigned int			points;
 
 	x = 0;
 	y = 0;
