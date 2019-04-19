@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "filler.h"
-#include <stdio.h> // remove
 
 /*
 ** while there is a line, gets the next line
@@ -89,7 +88,6 @@ int							main(void)
 	t_filler				*filler;
 	char					*line;
 
-	open("test", O_RDONLY);
 	filler = initialise_filler();
 	get_next_line(FD, &line);
 	define_players(line, filler);
