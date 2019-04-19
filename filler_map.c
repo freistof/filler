@@ -59,16 +59,12 @@ int					*fill_score_map(t_filler *filler)
 
 char				*fill_map(t_filler *filler, int y, int notfirst)
 {
-	int				i;
-	int				ret;
 	char			*line;
 
-	i = 0;
-	ret = 1;
 	get_next_line(FD, &line);
 	ft_strdel(&line);
 	if (notfirst)
-		ft_bzero(filler->map, filler->mapy * (filler->mapx + 1) + 1);
+		ft_bzero(filler->map, filler->mapy * filler->mapx + 1);
 	filler->map = get_y_lines(y, filler->map, 4);
 	filler->score = fill_score_map(filler);
 	return (filler->map);
