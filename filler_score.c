@@ -32,32 +32,30 @@ int					define_y(t_filler *filler, int i)
 	return (i / filler->mapx);
 }
 
+int					define_x(t_filler *filler, int i)
+{
+	return (i % filler->mapy);
+}
+
+int					absolute(int a)
+{
+	if (a < 0)
+		return (a * -1);
+	return (a);
+}
+
 void				make_side_scores(t_filler *filler)
 {
-	int y;
-	int x;
-	int	add;
+	int i;
 
-	y = 0;
-	while (y < filler->mapy)
+	i = 0;
+	while (i < filler->mapsize)
 	{
-		add = 0;
-		x = 0;
-		while (x < filler->mapx / 2)
-		{
-			filler->score[y * filler->mapx + x] += add;
-			add++;
-			x++;
-		}
-		while (x < filler->mapx)
-		{
-			filler->score[y * filler->mapx + x] += add;
-			add--;
-			x++;
-		}
-		y++;
+		filler->score[i] *= (
+			absolute(filler->mapy / 2  - define_y(filler, i)) + \
+			absolute(filler->mapx / 2 - define_x(filler, i)));
+		i++;
 	}
-
 }
 
 /*
@@ -79,9 +77,9 @@ void				make_score_map(t_filler *filler, int i, int score, int *dir)
 		filler->score[i] = score;
 	if (define_y(filler, i) == define_y(filler, i + dir[0])
 		&& filler->score[i + dir[0]] == -1)
-		make_score_map(filler, i + dir[0], score + 1, dir);
+		make_score_map(filler, i + dir[0], score + 2, dir);
 	if (i + dir[1] >= 0 && filler->score[i + dir[1]] == -1)
-		make_score_map(filler, i + dir[1], score + 1, dir);
+		make_score_map(filler, i + dir[1], score + 2, dir);
 }
 
 /*
@@ -104,5 +102,5 @@ void				four_directions_map(t_filler *filler, int i)
 	dir[0] = 1;
 	dir[1] = -filler->mapx;
 	make_score_map(filler, i, 0, dir);
-//	make_side_scores(filler);
+	make_side_scores(filler);
 }
