@@ -32,6 +32,34 @@ int					define_y(t_filler *filler, int i)
 	return (i / filler->mapx);
 }
 
+void				make_side_scores(t_filler *filler)
+{
+	int y;
+	int x;
+	int	add;
+
+	y = 0;
+	while (y < filler->mapy)
+	{
+		add = 0;
+		x = 0;
+		while (x < filler->mapx / 2)
+		{
+			filler->score[y * filler->mapx + x] += add;
+			add++;
+			x++;
+		}
+		while (x < filler->mapx)
+		{
+			filler->score[y * filler->mapx + x] += add;
+			add--;
+			x++;
+		}
+		y++;
+	}
+
+}
+
 /*
 ** starts at the first filler enemy piece
 ** goes to directions (four times) and gives score according
@@ -76,4 +104,5 @@ void				four_directions_map(t_filler *filler, int i)
 	dir[0] = 1;
 	dir[1] = -filler->mapx;
 	make_score_map(filler, i, 0, dir);
+//	make_side_scores(filler);
 }
