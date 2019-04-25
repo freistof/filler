@@ -43,6 +43,7 @@ int					*fill_score_map(t_filler *filler)
 
 	i = 0;
 	filler->start = first_enemy(filler);
+	filler->start = filler->mapsize / 2;
 	while (i < filler->mapsize)
 	{
 		filler->score[i] = -1;
