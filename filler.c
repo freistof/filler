@@ -40,6 +40,7 @@ static void					filler_loop(t_filler *filler)
 		ft_strdel(&line);
 	}
 	ft_strdel(&filler->map);
+	free(filler->score);
 }
 
 /*

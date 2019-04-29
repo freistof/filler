@@ -29,6 +29,7 @@ typedef struct				s_filler
 	int						mapsize;
 	char					*map;
 	int						*score;
+	int						count;
 	int						start;
 	int						*x;
 	int						*y;
@@ -47,7 +48,7 @@ void						get_piece(t_filler *filler, const char *line);
 void						place_piece(t_filler *filler);
 void						move_piece_top_left(t_filler *filler);
 
-void						make_score_map(t_filler *filler, int i, int score, int mapx);
+void						make_score_map(t_filler *f, int i, int s, int mapx);
 
 char						*get_y_lines(int y, char *string, int start);
 

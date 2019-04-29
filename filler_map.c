@@ -32,6 +32,27 @@ static int			first_enemy(t_filler *filler)
 }
 
 /*
+** count number of enemy pieces
+*/
+
+int					count_score(t_filler *filler)
+{
+	int i;
+	int count;
+
+	i = 0;
+	count = 0;
+	while (filler->map[i] != '\0')
+	{
+		if (filler->map[i] == filler->enemy || \
+			filler->map[i] == filler->enemy + 32)
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+/*
 ** mallocs the score map if it's the first time
 ** initalises points to zero
 ** fills the score map with scores (filler_score.c)
@@ -40,10 +61,21 @@ static int			first_enemy(t_filler *filler)
 int					*fill_score_map(t_filler *filler)
 {
 	int				i;
+	int				newcount;
 
 	i = 0;
+	while (i < filler->mapsize)
+	{
+		filler->score[i] = 100000;
+		i++;
+	}
 	filler->start = first_enemy(filler);
-	make_score_map(filler, filler->start, 0, filler->mapx);
+	newcount = count_score(filler);
+	if (newcount > filler->count)
+	{
+		filler->count = newcount;
+		make_score_map(filler, filler->start, 0, filler->mapx);
+	}
 	return (filler->score);
 }
 
@@ -76,12 +108,7 @@ char				*get_map(t_filler *filler, const char *line)
 	filler->mapsize = filler->mapy * filler->mapx;
 	filler->map = ft_strnew(filler->mapsize + 1);
 	filler->score = malloc(sizeof(int) * filler->mapsize);
-	int i = 0;
-	while (i < filler->mapsize)
-	{
-		filler->score[i] = 100000;
-		i++;
-	}
+	filler->count = count_score(filler);
 	filler->map = fill_map(filler, filler->mapy, 0);
 	return (filler->map);
 }
