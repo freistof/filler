@@ -52,7 +52,7 @@ void				make_side_scores(t_filler *filler)
 	i = 0;
 	while (i < filler->mapsize)
 	{
-		filler->score[i] += (
+		filler->score[i] -= (
 			absolute(filler->mapy / 2  - define_y(filler, i)) + \
 			absolute(filler->mapx / 2 - define_x(filler, i)));
 		i++;
@@ -65,18 +65,19 @@ void				make_side_scores(t_filler *filler)
 ** to how far from the enemy the position is
 */
 
-void				make_score_map(t_filler *filler, int i, int score, int *dir)
+void				make_score_map(t_filler *filler, int i, int score, int mapx)
 {
-	if (i < 0 || i >= filler->mapsize)
+	if (i < 0 || i >= filler->mapsize || filler->score[i] <= score)
 		return ;
 	if (filler->map[i] == filler->enemy || filler->map[i] == filler->enemy + 32)
 		score = 0;
 	filler->score[i] = score;
-	if (define_y(filler, i) == define_y(filler, i + dir[0])
-		&& filler->score[i + dir[0]] == -1)
-		make_score_map(filler, i + dir[0], score + 2, dir);
-	if (i + dir[1] >= 0 && filler->score[i + dir[1]] == -1)
-		make_score_map(filler, i + dir[1], score + 2, dir);
+	make_score_map(filler, i + mapx, score + 1, mapx);
+	if (i / mapx == (i + 1) / mapx)/* && filler->score[i + 1] != score + 1*/
+		make_score_map(filler, i + 1, score + 1, mapx);
+	make_score_map(filler, i - mapx, score + 1, mapx);
+	if (i / mapx == (i - 1) / mapx)/* && filler->score[i - 1] != score + 1*/
+		make_score_map(filler, i - 1, score + 1, mapx);
 }
 
 /*
@@ -87,26 +88,33 @@ void				four_directions_map(t_filler *filler, int i)
 {
 	int		dir[2];
 
-/*	FILE *test;
+	FILE *test;
 	test = fopen("scorechecker", "w!");
-*/
+
 	dir[0] = -1;
+	dir[1] = -filler->mapx;
+	make_score_map(filler, i, 0, filler->mapx);
+/*	dir[0] = +1;
 	dir[1] = -filler->mapx;
 	make_score_map(filler, i, 0, dir);
 	dir[0] = +1;
 	dir[1] = +filler->mapx;
-	make_score_map(filler, i + 1 + filler->mapx, 0, dir);
+	make_score_map(filler, i, 0, dir);
 	dir[0] = -1;
 	dir[1] = +filler->mapx;
-	make_score_map(filler, i + filler->mapx, 0, dir);
-	dir[0] = +1;
-	dir[1] = -filler->mapx;
-	make_score_map(filler, i + 1, 0, dir);
-	make_side_scores(filler);
-/*	for (int i = 0; i < filler->mapy; i++)
+	make_score_map(filler, i, 0, dir);*/
+
+//	make_side_scores(filler);
+	for (int i = 0; i < filler->mapy; i++)
 	{
 		for (int j = 0; j < filler->mapx; j++)
 			fprintf(test, "%c\t%i\t", filler->map[i * filler->mapx + j], filler->score[i * filler->mapx + j]);
 		fprintf(test, "\n");
-	}*/
+	}
 }
+
+/*	if (define_y(filler, i) == define_y(filler, i + dir[0])
+		&& (filler->score[i + dir[0]] == 0 || filler->score[i + dir[0]] > score))
+		make_score_map(filler, i + dir[0], score + 1, dir);
+	if (i + dir[1] >= 0 && i + dir[1] < filler->mapsize && (filler->score[i + dir[1]] == 0 || filler->score[i + dir[1]] > score))
+		make_score_map(filler, i + dir[1], score + 1, dir);*/

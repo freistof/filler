@@ -43,12 +43,6 @@ int					*fill_score_map(t_filler *filler)
 
 	i = 0;
 	filler->start = first_enemy(filler);
-	filler->start = filler->mapsize / 2;
-	while (i < filler->mapsize)
-	{
-		filler->score[i] = -1;
-		i++;
-	}
 	four_directions_map(filler, filler->start);
 	return (filler->score);
 }
@@ -82,6 +76,12 @@ char				*get_map(t_filler *filler, const char *line)
 	filler->mapsize = filler->mapy * filler->mapx;
 	filler->map = ft_strnew(filler->mapsize + 1);
 	filler->score = malloc(sizeof(int) * filler->mapsize);
+	int i = 0;
+	while (i < filler->mapsize)
+	{
+		filler->score[i] = 100000;
+		i++;
+	}
 	filler->map = fill_map(filler, filler->mapy, 0);
 	return (filler->map);
 }

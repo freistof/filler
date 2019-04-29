@@ -125,16 +125,11 @@ void						place_piece(t_filler *filler)
 	points = -1;
 	while (i < filler->mapsize)
 	{
-		if (fit_piece(filler, i))
+		if (fit_piece(filler, i) && get_points(filler, i) <= points)
 		{
-			if (i / filler->mapx + filler->piecey <= filler->mapy && \
-				i % filler->mapx + filler->piecex <= filler->mapx &&
-				get_points(filler, i) <= points)
-			{
-				x = i % filler->mapx - filler->xshift;
-				y = i / filler->mapx - filler->yshift;
-				points = get_points(filler, i);
-			}
+			x = i % filler->mapx - filler->xshift;
+			y = i / filler->mapx - filler->yshift;
+			points = get_points(filler, i);
 		}
 		i++;
 	}
