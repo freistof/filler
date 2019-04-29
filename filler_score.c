@@ -67,7 +67,7 @@ void				make_side_scores(t_filler *filler)
 
 void				make_score_map(t_filler *filler, int i, int score, int mapx)
 {
-	if (i < 0 || i >= filler->mapsize || filler->score[i] <= score)
+	if (i < 0 || i > filler->mapsize || filler->score[i] <= score)
 		return ;
 	if (filler->map[i] == filler->enemy || filler->map[i] == filler->enemy + 32)
 		score = 0;
@@ -86,13 +86,13 @@ void				make_score_map(t_filler *filler, int i, int score, int mapx)
 
 void				four_directions_map(t_filler *filler, int i)
 {
-	int		dir[2];
+//	int		dir[2];
 
-	FILE *test;
-	test = fopen("scorechecker", "w!");
+//	FILE *test;
+//	test = fopen("scorechecker", "w!");
 
-	dir[0] = -1;
-	dir[1] = -filler->mapx;
+//	dir[0] = -1;
+//	dir[1] = -filler->mapx;
 	make_score_map(filler, i, 0, filler->mapx);
 /*	dir[0] = +1;
 	dir[1] = -filler->mapx;
@@ -105,12 +105,12 @@ void				four_directions_map(t_filler *filler, int i)
 	make_score_map(filler, i, 0, dir);*/
 
 //	make_side_scores(filler);
-	for (int i = 0; i < filler->mapy; i++)
+/*	for (int i = 0; i < filler->mapy; i++)
 	{
 		for (int j = 0; j < filler->mapx; j++)
 			fprintf(test, "%c\t%i\t", filler->map[i * filler->mapx + j], filler->score[i * filler->mapx + j]);
 		fprintf(test, "\n");
-	}
+	}*/
 }
 
 /*	if (define_y(filler, i) == define_y(filler, i + dir[0])
