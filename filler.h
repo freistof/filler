@@ -47,7 +47,7 @@ void						get_piece(t_filler *filler, const char *line);
 void						place_piece(t_filler *filler);
 void						move_piece_top_left(t_filler *filler);
 
-void						four_directions_map(t_filler *filler, int i);
+void						make_score_map(t_filler *filler, int i, int score, int mapx);
 
 char						*get_y_lines(int y, char *string, int start);
 

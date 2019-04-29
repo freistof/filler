@@ -43,7 +43,7 @@ int					*fill_score_map(t_filler *filler)
 
 	i = 0;
 	filler->start = first_enemy(filler);
-	four_directions_map(filler, filler->start);
+	make_score_map(filler, filler->start, 0, filler->mapx);
 	return (filler->score);
 }
 
