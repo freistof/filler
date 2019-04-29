@@ -15,7 +15,7 @@
 /*
 ** while there is a line, gets the next line
 ** if line is "Plateau x y" get_map()
-** mallocs map if it doesn't exist yet (see initalise_filler)
+** mallocs map if it doesn't exist yet
 ** else fill_map() updates the map
 ** moves on to get_piece function to find the correct place
 */
