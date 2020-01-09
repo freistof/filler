@@ -26,7 +26,7 @@ all: $(NAME)
 $(NAME):
 	make -C libft/
 	make -C printf/
-	gcc -o $(NAME) $(FLAGS) $(SRCS) libft/libft.a libftprintf.a
+	gcc -o $(NAME) $(FLAGS) $(SRCS) libft/libft.a printf/libftprintf.a
 
 clean:
 	make -C libft/ clean

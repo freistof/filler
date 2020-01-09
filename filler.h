@@ -16,7 +16,6 @@
 # include "libft/libft.h"
 # include "printf/ft_printf.h"
 # include <unistd.h>
-# include <fcntl.h>
 
 # define FD 0
 
