@@ -27,7 +27,7 @@ all: $(NAME)
 
 $(NAME):
 	gcc $(FLAGS) -c $(SRC) -I ft_printf.h
-	ar rc $(NAME) ../libft/libft.a
+	ar rc $(NAME) $(OBJS) ../libft/libft.a
 
 clean:
 	rm -f $(OBJS) $(LOBJS)
