@@ -15,7 +15,7 @@
 /*
 ** while there is a line, gets the next line
 ** if line is "Plateau x y" get_map()
-** mallocs map if it doesn't exist yet
+** mallocs map if it doesn't exist yet (see initalise_filler)
 ** else fill_map() updates the map
 ** moves on to get_piece function to find the correct place
 */
@@ -89,11 +89,11 @@ int							main(void)
 	t_filler				*filler;
 	char					*line;
 
-	open("test", O_RDONLY);
 	filler = initialise_filler();
 	get_next_line(FD, &line);
 	define_players(line, filler);
 	ft_strdel(&line);
-	filler_loop(filler);
+	if (filler->player)
+		filler_loop(filler);
 	return (0);
 }
